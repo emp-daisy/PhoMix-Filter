@@ -4,10 +4,35 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
+
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World, MyActivity"
+            android:text="MAIN MENU"
+
             />
+
+    <ImageButton
+        android:layout_width="202dp"
+        android:layout_height="199dp"
+        android:id="@+id/imageButton"
+        android:src="@drawable/cam"
+        android:layout_gravity="center_horizontal"/>
+
+    <ImageButton
+        android:layout_width="215dp"
+        android:layout_height="198dp"
+        android:src="@drawable/palette"
+        android:id="@+id/imageButton2"
+        android:layout_gravity="center_horizontal"/>
+
+    <ImageButton
+        android:layout_width="267dp"
+        android:layout_height="127dp"
+        android:src="@drawable/grid"
+        android:id="@+id/imageButton3"
+        android:layout_gravity="center_horizontal"/>
+
+
 </LinearLayout>
 
