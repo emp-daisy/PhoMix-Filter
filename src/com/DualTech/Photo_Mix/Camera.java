@@ -28,6 +28,8 @@ public class Camera extends Activity implements View.OnClickListener{
         setContentView(R.layout.snap);
         initialize();
         takePicture();
+
+
     }
 
     public void takePicture(){
