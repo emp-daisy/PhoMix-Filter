@@ -33,5 +33,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Grid">
+
+            <intent-filter>
+                <action android:name="com.DualTech.Photo_Mix.GRID" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Editor">
+
+            <intent-filter>
+                <action android:name="com.DualTech.Photo_Mix.EDITOR" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

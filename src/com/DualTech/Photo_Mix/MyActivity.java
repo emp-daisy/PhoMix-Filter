@@ -40,12 +40,12 @@ public class MyActivity extends Activity implements View.OnClickListener{
                 startActivity(i);
                 break;
             case R.id.effect:
-                //i = Intent("com.DualTech.Photo_Mix.EDITOR");
-                //startActivity(i);
+                i = new Intent("com.DualTech.Photo_Mix.EDITOR");
+                startActivity(i);
                 break;
             case R.id.grid:
-                //i = Intent("com.DualTech.Photo_Mix.GRID");
-                //startActivity(i);
+                i = new Intent("com.DualTech.Photo_Mix.GRID");
+                startActivity(i);
                 break;
         }
     }
