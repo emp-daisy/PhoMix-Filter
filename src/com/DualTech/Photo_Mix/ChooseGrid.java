@@ -55,10 +55,12 @@ public class ChooseGrid extends Activity implements View.OnClickListener{
                 startActivity(i);
                 break;
             case R.id.btGrid2b:
+                chosenGrid = 1;
                 i = new Intent("com.DualTech.Photo_Mix.GRID");
                 startActivity(i);
                 break;
             case R.id.btGrid2c:
+                chosenGrid = 2;
                 i = new Intent("com.DualTech.Photo_Mix.GRID");
                 startActivity(i);
                 break;
