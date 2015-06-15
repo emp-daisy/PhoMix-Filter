@@ -41,11 +41,32 @@ public class Grid extends Activity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         switch (ChooseGrid.getChosenGrid()){
-            case 0:
-                setContentView(R.layout.grid);
-            case 1:
-            case 2:
-            case 3:
+            case 21:
+                setContentView(R.layout.grid_2a);
+                break;
+            case 22:
+                setContentView(R.layout.grid_2b);
+                break;
+            case 23:
+                setContentView(R.layout.grid_2c);
+                break;
+            case 31:
+                setContentView(R.layout.grid_3a);
+                break;
+            case 32:
+                setContentView(R.layout.grid_3b);
+                break;
+            case 33:
+                setContentView(R.layout.grid_3c);
+                break;
+            case 41:
+                setContentView(R.layout.grid_4a);
+                break;
+            case 42:
+                setContentView(R.layout.grid_4b);
+                break;
+            case 51:
+                setContentView(R.layout.grid_5a);
                 break;
             default:
                 setContentView(R.layout.grid);

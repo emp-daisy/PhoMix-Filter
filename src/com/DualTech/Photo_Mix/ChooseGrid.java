@@ -13,7 +13,7 @@ public class ChooseGrid extends Activity implements View.OnClickListener{
 
     private static int chosenGrid;
     public static ArrayList<Button> gridButtons;
-    Button btGrid2a,btGrid2b, btGrid2c, btGrid3a;
+    Button btGrid2a,btGrid2b, btGrid2c, btGrid3a, btGrid3b, btGrid3c, btGrid4a, btGrid4b, btGrid5a;
     GridLayout grid2, grid3, grid4, grid5;
     Intent i;
 
@@ -31,14 +31,25 @@ public class ChooseGrid extends Activity implements View.OnClickListener{
         grid3 = (GridLayout) findViewById(R.id.gL3);
         grid4 = (GridLayout) findViewById(R.id.gL4);
         grid5 = (GridLayout) findViewById(R.id.gL5);
+        //buttons initialization
         btGrid2a = (Button) findViewById(R.id.btGrid2a);
         btGrid2b = (Button) findViewById(R.id.btGrid2b);
         btGrid2c = (Button) findViewById(R.id.btGrid2c);
         btGrid3a = (Button) findViewById(R.id.btGrid3a);
+        btGrid3b = (Button) findViewById(R.id.btGrid3b);
+        btGrid3c = (Button) findViewById(R.id.btGrid3c);
+        btGrid4a = (Button) findViewById(R.id.btGrid4a);
+        btGrid4b = (Button) findViewById(R.id.btGrid4b);
+        btGrid5a = (Button) findViewById(R.id.btGrid5a);
         btGrid2a.setOnClickListener(this);
+        btGrid2b.setOnClickListener(this);
         btGrid2c.setOnClickListener(this);
         btGrid3a.setOnClickListener(this);
-
+        btGrid3b.setOnClickListener(this);
+        btGrid3c.setOnClickListener(this);
+        btGrid4a.setOnClickListener(this);
+        btGrid4b.setOnClickListener(this);
+        btGrid5a.setOnClickListener(this);
     }
 
     public static int getChosenGrid(){
@@ -50,20 +61,36 @@ public class ChooseGrid extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btGrid2a:
-                chosenGrid = 0;
-                i = new Intent("com.DualTech.Photo_Mix.GRID");
-                startActivity(i);
+                chosenGrid = 21;
                 break;
             case R.id.btGrid2b:
-                chosenGrid = 1;
-                i = new Intent("com.DualTech.Photo_Mix.GRID");
-                startActivity(i);
+                chosenGrid = 22;
                 break;
             case R.id.btGrid2c:
-                chosenGrid = 2;
-                i = new Intent("com.DualTech.Photo_Mix.GRID");
-                startActivity(i);
+                chosenGrid = 23;
+                break;
+            case R.id.btGrid3a:
+                chosenGrid = 31;
+                break;
+            case R.id.btGrid3b:
+                chosenGrid = 32;
+                break;
+            case R.id.btGrid3c:
+                chosenGrid = 33;
+                break;
+            case R.id.btGrid4a:
+                chosenGrid = 41;
+                break;
+            case R.id.btGrid4b:
+                chosenGrid = 42;
+                break;
+            case R.id.btGrid5a:
+                chosenGrid = 51;
                 break;
         }
+        //star grid activity
+        i = new Intent("com.DualTech.Photo_Mix.GRID");
+        startActivity(i);
     }
+
 }
