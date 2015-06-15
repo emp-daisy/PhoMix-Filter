@@ -47,5 +47,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChooseGrid">
+
+            <intent-filter>
+                <action android:name="com.DualTech.Photo_Mix.CHOOSE_GRID" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

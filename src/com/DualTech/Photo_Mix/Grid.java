@@ -27,7 +27,18 @@ public class Grid extends Activity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.grid);
+        switch (ChooseGrid.getChosenGrid()){
+            case 0:
+                setContentView(R.layout.grid);
+            case 1:
+            case 2:
+            case 3:
+                break;
+            default:
+                setContentView(R.layout.grid);
+                break;
+        }
+        //setContentView(R.layout.grid);
         initialize();
         initiliazeImg();
     }
@@ -54,6 +65,7 @@ public class Grid extends Activity implements View.OnClickListener {
     //Initializes buttons according to how many there are
     //Very Flexible!!
     private ArrayList<ImageButton> initiliazeImg(){
+        //Uses tags for getting all the Image Buttons
         ArrayList<ImageButton> imgViews = new ArrayList<ImageButton>();
         int imgCount = l1.getChildCount();
         for(int i = 0; i < imgCount; i++){

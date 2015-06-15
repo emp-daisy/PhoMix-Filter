@@ -3,7 +3,6 @@ package com.DualTech.Photo_Mix;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -44,7 +43,7 @@ public class MyActivity extends Activity implements View.OnClickListener{
                 startActivity(i);
                 break;
             case R.id.grid:
-                i = new Intent("com.DualTech.Photo_Mix.GRID");
+                i = new Intent("com.DualTech.Photo_Mix.CHOOSE_GRID");
                 startActivity(i);
                 break;
         }
