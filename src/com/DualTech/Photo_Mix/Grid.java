@@ -3,16 +3,25 @@ package com.DualTech.Photo_Mix;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Grid extends Activity implements View.OnClickListener {
 
@@ -23,6 +32,10 @@ public class Grid extends Activity implements View.OnClickListener {
     Intent i;
     ArrayList<ImageButton> imgbuttons;
     private static int RESULT_LOAD_IMAGE = 1;
+    final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
+    File file;
+    Bitmap img_bitmap;
+    FileOutputStream ostream;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +73,7 @@ public class Grid extends Activity implements View.OnClickListener {
         for(ImageButton x: imgbuttons){
             x.setOnClickListener(this);
         }
+
     }
 
     //Initializes buttons according to how many there are
@@ -80,16 +94,55 @@ public class Grid extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
         switch(v.getId()){
             case R.id.grideffect: //Goes to Editor
                 i = new Intent("com.DualTech.Photo_Mix.EDITOR");
                 startActivity(i);
                 break;
-            case R.id.savegrid: //Saves the Image
 
+            case R.id.savegrid: //Saves the Image
+                String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
+                String file_name =  "/PMX_"+ file_sub + ".jpg";
+                //creates the directory if it doesn't exist
+                if (!DIR.exists()) {
+                    boolean bo = DIR.mkdir();
+                }
+                file = new File(DIR.getAbsolutePath(), file_name);
+                try
+                {
+                    l1.setDrawingCacheEnabled(true);
+                    img_bitmap = l1.getDrawingCache();
+                    boolean b = file.createNewFile();
+                    ostream = new FileOutputStream(file);
+                    img_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                finally {
+                    try {
+                        ostream.flush();
+                        ostream.close();
+                        Toast.makeText(getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT ).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
+            default:
+                if(v.getTag().equals("imgButtons")){
+                    for(ImageButton ib: imgbuttons){
+                        if(v.getId() == ib.getId()) {
+                            //get currentID of image button clicked
+                            currentImgID = ib.getId();
+                        }
+                    }
+                    selectPicture();
+                }
         }
-        if(v.getTag().equals("imgButtons")){
+        /*if(v.getTag().equals("imgButtons")){
             for(ImageButton ib: imgbuttons){
                 if(v.getId() == ib.getId()) {
                     //get currentID of image button clicked
@@ -97,7 +150,7 @@ public class Grid extends Activity implements View.OnClickListener {
                 }
             }
             selectPicture();
-        }
+        }*/
     }
 
     @Override
