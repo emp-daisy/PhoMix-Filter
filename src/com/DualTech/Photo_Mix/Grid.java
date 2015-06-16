@@ -103,6 +103,7 @@ public class Grid extends Activity implements View.OnClickListener {
         //Uses tags for getting all the Image Buttons
         ArrayList<ImageButton> imgViews = new ArrayList<ImageButton>();
         int imgCount = l1.getChildCount();
+
         for(int i = 0; i < imgCount; i++){
             ImageButton child = (ImageButton)l1.getChildAt(i);
             final Object tagObj = child.getTag();

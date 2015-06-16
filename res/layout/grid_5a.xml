@@ -1,7 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:background="#33ff0A"
+        android:weightSum="2"
+        android:layout_above="@+id/savegrid"
+        android:padding="10dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/linny">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/imageButton2"
+                android:background="#000000"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:tag="imgButtons"/>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/imageButton3"
+                android:background="#000000"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:tag="imgButtons"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/imageButton6"
+                android:background="#000000"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:tag="imgButtons"/>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/imageButton4"
+                android:background="#000000"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:tag="imgButtons"/>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/imageButton5"
+                android:background="#000000"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:tag="imgButtons"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/savegrid"
+        android:layout_marginRight="77dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Effect"
+        android:id="@+id/grideffect"
+        android:layout_alignTop="@+id/savegrid"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="90dp"/>
+</RelativeLayout>
