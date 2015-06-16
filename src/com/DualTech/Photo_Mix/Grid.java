@@ -28,9 +28,9 @@ public class Grid extends Activity implements View.OnClickListener {
     Button SaveGrid;
     Button EditGrid;
     static int currentImgID = 0;
-    LinearLayout l1;
+    LinearLayout l1, l2, l3;
     Intent i;
-    ArrayList<ImageButton> imgbuttons;
+    static ArrayList<ImageButton> imgbuttons;
     private static int RESULT_LOAD_IMAGE = 1;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
     File file;
@@ -72,9 +72,7 @@ public class Grid extends Activity implements View.OnClickListener {
                 setContentView(R.layout.grid);
                 break;
         }
-        //setContentView(R.layout.grid);
         initialize();
-        initiliazeImg();
     }
 
     //Goes to Gallery
@@ -90,7 +88,15 @@ public class Grid extends Activity implements View.OnClickListener {
         SaveGrid.setOnClickListener(this);
         EditGrid.setOnClickListener(this);
         l1 = (LinearLayout) findViewById(R.id.linny);
-        imgbuttons = initiliazeImg();
+        l2 = (LinearLayout) findViewById(R.id.linny2);
+        l3 = (LinearLayout) findViewById(R.id.linny3);
+        imgbuttons = new ArrayList<ImageButton>();
+        if(l1 != null)
+            initiliazeImg(l1);
+        if(l2 != null)
+            initiliazeImg(l2);
+        if(l3 != null)
+            initiliazeImg(l3);
         for(ImageButton x: imgbuttons){
             x.setOnClickListener(this);
         }
@@ -99,23 +105,20 @@ public class Grid extends Activity implements View.OnClickListener {
 
     //Initializes buttons according to how many there are
     //Very Flexible!!
-    private ArrayList<ImageButton> initiliazeImg(){
+    private void initiliazeImg(LinearLayout l){
         //Uses tags for getting all the Image Buttons
-        ArrayList<ImageButton> imgViews = new ArrayList<ImageButton>();
-        int imgCount = l1.getChildCount();
-
+        int imgCount = l.getChildCount();
         for(int i = 0; i < imgCount; i++){
-            View child = l1.getChildAt(i);
+            View child = l.getChildAt(i);
             if(child instanceof ImageButton){
                 ImageButton im = (ImageButton)child;
-                final Object tagObj = child.getTag();
+                final Object tagObj = im.getTag();
                 if (tagObj != null && tagObj.equals("imgButtons")) {
-                    imgViews.add(im);
+                    imgbuttons.add(im);
                 }
             }
 
         }
-        return imgViews;
     }
 
     @Override
