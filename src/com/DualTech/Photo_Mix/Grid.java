@@ -100,7 +100,6 @@ public class Grid extends Activity implements View.OnClickListener {
         for(ImageButton x: imgbuttons){
             x.setOnClickListener(this);
         }
-
     }
 
     //Initializes buttons according to how many there are
@@ -154,10 +153,13 @@ public class Grid extends Activity implements View.OnClickListener {
                     try {
                         ostream.flush();
                         ostream.close();
-                        Toast.makeText(getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getApplicationContext(), "Saved to app folder as "+ file_name, Toast.LENGTH_SHORT ).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    intent.setData(Uri.fromFile(file));
+                    sendBroadcast(intent);
                 }
                 break;
             default:
