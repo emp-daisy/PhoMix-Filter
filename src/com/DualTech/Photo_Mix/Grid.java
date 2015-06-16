@@ -105,11 +105,15 @@ public class Grid extends Activity implements View.OnClickListener {
         int imgCount = l1.getChildCount();
 
         for(int i = 0; i < imgCount; i++){
-            ImageButton child = (ImageButton)l1.getChildAt(i);
-            final Object tagObj = child.getTag();
-            if (tagObj != null && tagObj.equals("imgButtons")) {
-                imgViews.add(child);
+            View child = l1.getChildAt(i);
+            if(child instanceof ImageButton){
+                ImageButton im = (ImageButton)child;
+                final Object tagObj = child.getTag();
+                if (tagObj != null && tagObj.equals("imgButtons")) {
+                    imgViews.add(im);
+                }
             }
+
         }
         return imgViews;
     }
@@ -164,15 +168,6 @@ public class Grid extends Activity implements View.OnClickListener {
                     selectPicture();
                 }
         }
-        /*if(v.getTag().equals("imgButtons")){
-            for(ImageButton ib: imgbuttons){
-                if(v.getId() == ib.getId()) {
-                    //get currentID of image button clicked
-                    currentImgID = ib.getId();
-                }
-            }
-            selectPicture();
-        }*/
     }
 
     @Override
