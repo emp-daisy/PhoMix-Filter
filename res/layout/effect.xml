@@ -18,82 +18,90 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button1"
+                android:text="Brightness"
                 android:tag="effects"
                 android:id="@+id/bt1"
                  />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button2"
+                android:text="Contrast"
                 android:tag="effects"
                 android:id="@+id/bt2"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button3"
+                android:text="Negative"
                 android:tag="effects"
                 android:id="@+id/bt3"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button4"
+                android:text="GrayScale"
                 android:tag="effects"
                 android:id="@+id/bt4"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button5"
+                android:text="Rotate"
                 android:tag="effects"
                 android:id="@+id/bt5"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button6"
+                android:text="Saturation"
                 android:tag="effects"
                 android:id="@+id/bt6"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button7"
+                android:text="Sepia"
                 android:tag="effects"
                 android:id="@+id/bt7"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button8"
+                android:text="Flip"
                 android:tag="effects"
                 android:id="@+id/bt8"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button9"
+                android:text="Grain"
                 android:tag="effects"
                 android:id="@+id/bt9"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button10"
+                android:text="Fill-Light"
                 android:tag="effects"
                 android:id="@+id/bt10"
                 />
             </LinearLayout>
         </HorizontalScrollView>
 
-    <ImageView
+    <android.opengl.GLSurfaceView
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/ivPic"
+        android:id="@+id/effectsView"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/skBar"
+        android:layout_above="@+id/horizontalScrollView"
+        android:layout_alignParentLeft="true"
+        />
 
 
 </RelativeLayout>

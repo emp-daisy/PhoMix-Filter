@@ -191,6 +191,7 @@ public class Grid extends Activity implements View.OnClickListener {
             // my ImageView
             ImageButton myPhotoImage = (ImageButton) findViewById(currentImgID);
             myPhotoImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
         }
     }
 
