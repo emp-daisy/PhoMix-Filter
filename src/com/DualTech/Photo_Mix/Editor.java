@@ -1,22 +1,34 @@
 package com.DualTech.Photo_Mix;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.effect.Effect;
 import android.media.effect.EffectContext;
 import android.media.effect.EffectFactory;
+import android.net.Uri;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.IntBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -24,8 +36,10 @@ import javax.microedition.khronos.opengles.GL10;
 public class Editor extends Activity implements View.OnClickListener, GLSurfaceView.Renderer, SeekBar.OnSeekBarChangeListener{
 
     static ArrayList<Button> effectList;
+    final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
     Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight;
     GLSurfaceView glView;
+    File file;
     private Effect mEffect;
     public static Bitmap inputBitmap;
     int currentEffect;
@@ -35,11 +49,15 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     int textureWidth, textureHeight, effectCount;
     float vBright, vContrast, vSat, vGrain, vFillLight;
     Button btSave, btSelect;
-    //private boolean saveFrame;
+    private boolean saveFrame;
+    private boolean effectOn;
     private boolean mInitialized = false;
     SeekBar seekBar;
     TextView effectText;
     static int call=0;
+    static int picsTaken = 0;
+
+    FileOutputStream out;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +70,11 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         glView.setEGLContextClientVersion(2);
         glView.setRenderer(this);
         glView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-        currentEffect = effectCount = 0;
+        currentEffect = 0;
+        effectCount = 0;
         vBright = vContrast = 0;
         vSat = vGrain = vFillLight = 0f;
+        saveFrame = effectOn = false;
         initialize();
     }
 
@@ -160,14 +180,14 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     }
 
     private void renderResult() {
-        if (currentEffect != 0) {
+        if (!effectOn) {
             // if no effect is chosen, just render the original bitmap
-            mTexRenderer.renderTexture(mTextures[1]);
+            mTexRenderer.renderTexture(mTextures[0]);
         }
         else {
             //saveFrame=true;
             // render the result of applyEffect()
-            mTexRenderer.renderTexture(mTextures[0]);
+            mTexRenderer.renderTexture(mTextures[1]);
         }
     }
 
@@ -175,46 +195,62 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     @Override
     public void onClick(View v) {
         seekBar.setVisibility(View.INVISIBLE);
+        picsTaken = 0;
         switch (v.getId()){
             case R.id.bt1:
+                effectOn = true;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt1;
                 break;
             case R.id.bt2:
+                effectOn = true;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt2;
                 break;
             case R.id.bt3:
+                effectOn = true;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt3;
                 break;
             case R.id.bt4:
+                effectOn = true;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt4;
                 break;
             case R.id.bt5:
+                effectOn = true;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt5;
                 break;
             case R.id.bt6:
+                effectOn = true;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt6;
                 break;
             case R.id.bt7:
+                effectOn = true;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt7;
                 break;
             case R.id.bt8:
+                effectOn = true;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt8;
                 break;
             case R.id.bt9:
+                effectOn = true;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt9;
                 break;
             case R.id.bt10:
+                effectOn = true;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt10;
+                break;
+            case R.id.btSave:
+                effectOn = true;
+                saveFrame = true;
+                Toast.makeText(getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT ).show();
                 break;
         }
 
@@ -248,6 +284,12 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
             applyEffect();
         }
         renderResult();
+        if (saveFrame) {
+            if(picsTaken == 0){
+                saveBitmap(takeScreenshot(gl));
+                saveFrame = false;
+            }
+        }
     }
 
     //SeekBar so use can use the bar to choose value
@@ -298,7 +340,38 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
         Bitmap mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         mBitmap.copyPixelsFromBuffer(ibt);
+        picsTaken++;
         return mBitmap;
+    }
+
+    private void saveBitmap(Bitmap bitmap) {
+        String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
+        String fname = "/PMX_"+ file_sub +".jpg";
+        if (!DIR.exists()) {
+            boolean bo = DIR.mkdir();
+        }
+        file = new File (DIR.getAbsolutePath(), fname);
+        if (file.exists ())
+            file.delete ();
+        try {
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                out.flush();
+                out.close();
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                intent.setData(Uri.fromFile(file));
+                sendBroadcast(intent);
+                Log.i("TAG", "Image SAVED=========="+file.getAbsolutePath());
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
