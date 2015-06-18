@@ -69,6 +69,7 @@ public class Camera extends Activity implements View.OnClickListener{
         if(resultCode == RESULT_OK){
             Bundle extras = data.getExtras();
             bmp = (Bitmap) extras.get("data");
+            Editor.inputBitmap = bmp;
             iv.setImageBitmap(bmp);
         }
     }

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -33,6 +34,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     private int[] mTextures = new int[2];
     int textureWidth, textureHeight, effectCount;
     float vBright, vContrast, vSat, vGrain, vFillLight;
+    Button btSave, btSelect;
     //private boolean saveFrame;
     private boolean mInitialized = false;
     SeekBar seekBar;
@@ -51,7 +53,8 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         glView.setRenderer(this);
         glView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         currentEffect = effectCount = 0;
-        vBright = vContrast = vSat = vGrain = vFillLight = 0f;
+        vBright = vContrast = 0;
+        vSat = vGrain = vFillLight = 0f;
         initialize();
     }
 
@@ -143,6 +146,10 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         effectList.add(btFlip);
         effectList.add(btGrain);
         effectList.add(btFillLight);
+        btSelect = (Button)findViewById(R.id.btSelect);
+        btSave = (Button)findViewById(R.id.btSave);
+        btSelect.setOnClickListener(this);
+        btSave.setOnClickListener(this);
         for(Button x : effectList){
             x.setOnClickListener(this);
         }
@@ -272,6 +279,26 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
                 effectText.setText("Fill-Light: " + (vFillLight * 100) + "%");
                 break;
         }
+    }
+
+    public Bitmap takeScreenshot(GL10 mGL) {
+        final int width = glView.getWidth();
+        final int height = glView.getHeight();
+        IntBuffer ib = IntBuffer.allocate(width * height);
+        IntBuffer ibt = IntBuffer.allocate(width * height);
+        mGL.glReadPixels(0, 0, width, height, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE, ib);
+
+        // Convert upside down mirror-reversed image to right-side up normal
+        // image.
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                ibt.put((height - i - 1) * width + j, ib.get(i * width + j));
+            }
+        }
+
+        Bitmap mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        mBitmap.copyPixelsFromBuffer(ibt);
+        return mBitmap;
     }
 
     @Override
