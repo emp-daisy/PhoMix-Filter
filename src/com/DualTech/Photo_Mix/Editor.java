@@ -2,6 +2,7 @@ package com.DualTech.Photo_Mix;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.effect.Effect;
@@ -13,12 +14,10 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,17 +53,17 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     private boolean mInitialized = false;
     SeekBar seekBar;
     TextView effectText;
+    Intent i;
     static int call=0;
     static int picsTaken = 0;
-
     FileOutputStream out;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.effect);
-        if(call == 0)
+        if(inputBitmap == null)
             inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
-        else
+        if(call == 1)
             inputBitmap = Grid.img_bitmap;
         glView = (GLSurfaceView) findViewById(R.id.effectsView);
         glView.setEGLContextClientVersion(2);
@@ -252,6 +251,9 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
                 saveFrame = true;
                 Toast.makeText(getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT ).show();
                 break;
+            case R.id.btSelect:
+                SelectPhoto();
+                break;
         }
 
         initEffect();
@@ -374,6 +376,11 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
     }
 
+    public void SelectPhoto(){
+        i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, 1);
+    }
+
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
 
@@ -382,5 +389,22 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Code to use selected image
+        if(resultCode == RESULT_OK){
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            // my ImageView
+            inputBitmap = BitmapFactory.decodeFile(picturePath);
+        }
     }
 }
