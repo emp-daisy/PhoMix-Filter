@@ -17,7 +17,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -38,6 +40,8 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
     Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight;
     GLSurfaceView glView;
+    private static int RESULT_LOAD_IMAGE = 1;
+    Intent i;
     File file;
     private Effect mEffect;
     public static Bitmap inputBitmap;
@@ -53,17 +57,17 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     private boolean mInitialized = false;
     SeekBar seekBar;
     TextView effectText;
-    Intent i;
     static int call=0;
     static int picsTaken = 0;
+
     FileOutputStream out;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.effect);
-        if(inputBitmap == null)
+        if(call == 0)
             inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
-        if(call == 1)
+        else
             inputBitmap = Grid.img_bitmap;
         glView = (GLSurfaceView) findViewById(R.id.effectsView);
         glView.setEGLContextClientVersion(2);
@@ -179,14 +183,14 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     }
 
     private void renderResult() {
-        if (!effectOn) {
+        if (effectOn) {
             // if no effect is chosen, just render the original bitmap
-            mTexRenderer.renderTexture(mTextures[0]);
+            mTexRenderer.renderTexture(mTextures[1]);
         }
         else {
             //saveFrame=true;
             // render the result of applyEffect()
-            mTexRenderer.renderTexture(mTextures[1]);
+            mTexRenderer.renderTexture(mTextures[0]);
         }
     }
 
@@ -247,12 +251,11 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
                 currentEffect = R.id.bt10;
                 break;
             case R.id.btSave:
-                effectOn = true;
                 saveFrame = true;
                 Toast.makeText(getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT ).show();
                 break;
             case R.id.btSelect:
-                SelectPhoto();
+                selectPicture();
                 break;
         }
 
@@ -325,6 +328,11 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         }
     }
 
+    public void selectPicture(){
+        i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
     public Bitmap takeScreenshot(GL10 mGL) {
         final int width = glView.getWidth();
         final int height = glView.getHeight();
@@ -353,8 +361,6 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
             boolean bo = DIR.mkdir();
         }
         file = new File (DIR.getAbsolutePath(), fname);
-        if (file.exists ())
-            file.delete ();
         try {
             out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
@@ -376,11 +382,6 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
     }
 
-    public void SelectPhoto(){
-        i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, 1);
-    }
-
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
 
@@ -390,6 +391,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -405,6 +407,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
             // my ImageView
             inputBitmap = BitmapFactory.decodeFile(picturePath);
+
         }
     }
 }
