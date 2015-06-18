@@ -37,11 +37,15 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     private boolean mInitialized = false;
     SeekBar seekBar;
     TextView effectText;
+    static int call=0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.effect);
-        inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
+        if(call == 0)
+            inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
+        else
+            inputBitmap = Grid.img_bitmap;
         glView = (GLSurfaceView) findViewById(R.id.effectsView);
         glView.setEGLContextClientVersion(2);
         glView.setRenderer(this);
@@ -163,6 +167,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
     @Override
     public void onClick(View v) {
+        seekBar.setVisibility(View.INVISIBLE);
         switch (v.getId()){
             case R.id.bt1:
                 seekBar.setVisibility(View.VISIBLE);

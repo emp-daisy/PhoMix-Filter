@@ -34,7 +34,7 @@ public class Grid extends Activity implements View.OnClickListener {
     private static int RESULT_LOAD_IMAGE = 1;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
     File file;
-    Bitmap img_bitmap;
+    static Bitmap img_bitmap;
     FileOutputStream ostream;
 
     @Override
@@ -81,6 +81,11 @@ public class Grid extends Activity implements View.OnClickListener {
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
+    //gets the image of the grid
+    public Bitmap getGrid(){
+        return img_bitmap;
+    }
+
     //Typical Initializing of buttons
     public void initialize(){
         SaveGrid = (Button) findViewById(R.id.savegrid);
@@ -125,8 +130,18 @@ public class Grid extends Activity implements View.OnClickListener {
 
         switch(v.getId()){
             case R.id.grideffect: //Goes to Editor
-                i = new Intent("com.DualTech.Photo_Mix.EDITOR");
-                startActivity(i);
+                try
+                {
+                    l1.setDrawingCacheEnabled(true);
+                    img_bitmap = l1.getDrawingCache();
+                    i = new Intent("com.DualTech.Photo_Mix.EDITOR");
+                    Editor.call = 1;
+                    startActivity(i);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
                 break;
 
             case R.id.savegrid: //Saves the Image

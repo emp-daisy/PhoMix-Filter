@@ -40,6 +40,7 @@ public class MyActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.effect:
                 i = new Intent("com.DualTech.Photo_Mix.EDITOR");
+                Editor.call=0;
                 startActivity(i);
                 break;
             case R.id.grid:
