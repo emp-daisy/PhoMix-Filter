@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -31,11 +32,11 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     private TextureRenderer mTexRenderer = new TextureRenderer();
     private int[] mTextures = new int[2];
     int textureWidth, textureHeight, effectCount;
-    float value;
-    //Effect mEffectArray[] = new Effect[50];
+    float vBright, vContrast, vSat, vGrain, vFillLight;
     //private boolean saveFrame;
     private boolean mInitialized = false;
     SeekBar seekBar;
+    TextView effectText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +47,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         glView.setRenderer(this);
         glView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         currentEffect = effectCount = 0;
-
-        value = 1f;
+        vBright = vContrast = vSat = vGrain = vFillLight = 0f;
         initialize();
     }
 
@@ -74,15 +74,11 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         switch (currentEffect){
             case R.id.bt1:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_BRIGHTNESS);
-                //mEffectArray[effectCount] = effectFactory.createEffect(EffectFactory.EFFECT_BRIGHTNESS);
-                //mEffectArray[effectCount].setParameter("brightness", value);
-                mEffect.setParameter("brightness", value);
+                mEffect.setParameter("brightness", vBright);
                 break;
             case R.id.bt2:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_CONTRAST);
-                //mEffectArray[effectCount] = effectFactory.createEffect(EffectFactory.EFFECT_CONTRAST);
-                //mEffectArray[effectCount].setParameter("contrast", value);
-                mEffect.setParameter("contrast", value);
+                mEffect.setParameter("contrast", vContrast);
                 break;
             case R.id.bt3:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_NEGATIVE);
@@ -96,7 +92,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
                 break;
             case R.id.bt6:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SATURATE);
-                mEffect.setParameter("scale", value);
+                mEffect.setParameter("scale", vSat);
                 break;
             case R.id.bt7:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SEPIA);
@@ -107,22 +103,22 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
                 break;
             case R.id.bt9:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_GRAIN);
-                mEffect.setParameter("strength", value);
+                mEffect.setParameter("strength", vGrain);
                 break;
             case R.id.bt10:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FILLLIGHT);
-                mEffect.setParameter("strength", value);
+                mEffect.setParameter("strength", vFillLight);
                 break;
         }
         glView.requestRender();
     }
 
     public void initialize() {
-        //mEffectArray = new Effect[50];
         seekBar = (SeekBar) findViewById(R.id.skBar);
         seekBar.setVisibility(View.INVISIBLE);
         seekBar.setOnSeekBarChangeListener(this);
         effectList = new ArrayList<Button>();
+        effectText = (TextView)findViewById(R.id.tvEffect);
         btBright = (Button)findViewById(R.id.bt1);
         btContrast = (Button)findViewById(R.id.bt2);
         btNegative = (Button)findViewById(R.id.bt3);
@@ -150,16 +146,6 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
     private void applyEffect() {
         mEffect.apply(mTextures[0], textureWidth, textureHeight, mTextures[1]);
-        /*if (effectCount > 0) { // if there is any effect
-            mEffectArray[1].apply(mTextures[0], textureWidth, textureHeight, mTextures[1]); // apply first effect
-            for (int i = 2; i < effectCount; i++) { // if more that one effect
-                int sourceTexture = mTextures[1];
-                int destinationTexture = mTextures[2];
-                mEffectArray[i].apply(sourceTexture, textureWidth, textureHeight, destinationTexture);
-                mTextures[1] = destinationTexture; // changing the textures array, so 1 is always the texture for output,
-                mTextures[2] = sourceTexture; // 2 is always the sparse texture
-            }
-        }*/
     }
 
     private void renderResult() {
@@ -179,52 +165,42 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt1:
-                effectCount++;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt1;
                 break;
             case R.id.bt2:
-                effectCount++;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt2;
                 break;
             case R.id.bt3:
-                effectCount++;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt3;
                 break;
             case R.id.bt4:
-                effectCount++;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt4;
                 break;
             case R.id.bt5:
-                effectCount++;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt5;
                 break;
             case R.id.bt6:
-                effectCount++;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt6;
                 break;
             case R.id.bt7:
-                effectCount++;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt7;
                 break;
             case R.id.bt8:
-                effectCount++;
                 seekBar.setVisibility(View.INVISIBLE);
                 currentEffect = R.id.bt8;
                 break;
             case R.id.bt9:
-                effectCount++;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt9;
                 break;
             case R.id.bt10:
-                effectCount++;
                 seekBar.setVisibility(View.VISIBLE);
                 currentEffect = R.id.bt10;
                 break;
@@ -267,24 +243,28 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         switch(currentEffect){
             case R.id.bt1:
-                value = (float)progress / 6;
+                vBright = (float)progress / 6;
+                effectText.setText("Brightness: " + (vBright * 100) + "%");
                 break;
             case R.id.bt2:
-                value = (float)progress / 10;
+                vContrast = (float)progress / 10;
+                effectText.setText("Contrast: " + (vContrast * 100) + "%");
                 break;
             case R.id.bt6:
-                float temp = progress;
-                if(temp <= 5){
-                    value = -(temp / 20);
+                if(progress <= 5){
+                    vSat = -(progress / 20);
                 }else{
-                    value = progress / 20;
+                    vSat = progress / 20;
                 }
+                effectText.setText("Saturation: " + (vSat * 100) + "%");
                 break;
             case R.id.bt9:
-                value = (float)progress / 12;
+                vGrain = (float)progress / 12;
+                effectText.setText("Grain: " + (vGrain * 100) + "%");
                 break;
             case R.id.bt10:
-                value = (float)progress / 40;
+                vFillLight = (float)progress / 40;
+                effectText.setText("Fill-Light: " + (vFillLight * 100) + "%");
                 break;
         }
     }
