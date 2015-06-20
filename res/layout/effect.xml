@@ -18,6 +18,13 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Border"
+                android:tag="effects"
+                android:id="@+id/bt0"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Brightness"
                 android:tag="effects"
                 android:id="@+id/bt1"

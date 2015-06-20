@@ -16,11 +16,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.Window;
+import android.widget.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +37,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
     static ArrayList<Button> effectList;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
-    Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight;
+    Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder;
     GLSurfaceView glView;
     private static int RESULT_LOAD_IMAGE = 1;
     Intent i;
@@ -57,14 +56,18 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     private boolean mInitialized = false;
     SeekBar seekBar;
     TextView effectText;
+    ImageButton share;
     static int call=0;
     static int picsTaken = 0;
-
     FileOutputStream out;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.effect);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);
+
+        share = (ImageButton) findViewById(R.id.icon);
         if(call == 0)
             inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
         else
@@ -151,6 +154,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         seekBar.setOnSeekBarChangeListener(this);
         effectList = new ArrayList<Button>();
         effectText = (TextView)findViewById(R.id.tvEffect);
+        btBorder = (Button)findViewById(R.id.bt0);
         btBright = (Button)findViewById(R.id.bt1);
         btContrast = (Button)findViewById(R.id.bt2);
         btNegative = (Button)findViewById(R.id.bt3);
@@ -161,6 +165,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         btFlip = (Button)findViewById(R.id.bt8);
         btGrain = (Button)findViewById(R.id.bt9);
         btFillLight = (Button)findViewById(R.id.bt10);
+        effectList.add(btBorder);
         effectList.add(btBright);
         effectList.add(btContrast);
         effectList.add(btNegative);
@@ -200,8 +205,15 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     @Override
     public void onClick(View v) {
         seekBar.setVisibility(View.INVISIBLE);
+        seekBar.setProgress(10);
+        effectText.setText("");
         picsTaken = 0;
         switch (v.getId()){
+            case R.id.bt0:
+                LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = layoutInflater.inflate(R.layout.color_pop, null);
+                final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                break;
             case R.id.bt1:
                 effectOn = true;
                 seekBar.setVisibility(View.VISIBLE);
