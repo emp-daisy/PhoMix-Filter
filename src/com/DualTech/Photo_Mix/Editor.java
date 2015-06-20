@@ -53,7 +53,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     float vBright, vContrast, vSat, vGrain, vFillLight;
     Button btSave, btSelect;
     private boolean saveFrame;
-    private boolean effectOn;
+    private boolean effectOn, changeImage;
     private boolean mInitialized = false;
     SeekBar seekBar;
     TextView effectText;
@@ -69,16 +69,18 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
             inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
         else
             inputBitmap = Grid.img_bitmap;
+
         glView = (GLSurfaceView) findViewById(R.id.effectsView);
         glView.setEGLContextClientVersion(2);
         glView.setRenderer(this);
         glView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         currentEffect = 0;
         effectCount = 0;
-        vBright = vContrast = 0;
+        vBright = vContrast = 1;
         vSat = vGrain = vFillLight = 0f;
         saveFrame = effectOn = false;
         initialize();
+        changeImage = false; //Check if user used select photo button
     }
 
     private void loadTextures(){
@@ -276,6 +278,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
     @Override
     public void onDrawFrame(GL10 gl) {
+        //Initializes in the beginning
         if (!mInitialized) {
             //Only need to do this once
             mEffectContext = EffectContext.createWithCurrentGlContext();
@@ -283,12 +286,23 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
             loadTextures();
             mInitialized = true;
         }
+
+        //If user selects photo using select button
+        //Load the textures again so the textures uses new bitmap
+        if(changeImage){
+            loadTextures();
+            changeImage = false;
+        }
+
+        //Apply Effect if used
         if (currentEffect != 0) {
             //if an effect is chosen initialize it and apply it to the texture
             initEffect();
             applyEffect();
         }
         renderResult();
+
+        //Save the Photo
         if (saveFrame) {
             if(picsTaken == 0){
                 saveBitmap(takeScreenshot(gl));
@@ -331,6 +345,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     public void selectPicture(){
         i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
+        i = new Intent("com.DualTech.Photo_Mix.EDITOR");
     }
 
     public Bitmap takeScreenshot(GL10 mGL) {
@@ -407,7 +422,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
             // my ImageView
             inputBitmap = BitmapFactory.decodeFile(picturePath);
-
+            changeImage = true;
         }
     }
 }
