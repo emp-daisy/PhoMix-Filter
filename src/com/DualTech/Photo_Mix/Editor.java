@@ -1,6 +1,7 @@
 package com.DualTech.Photo_Mix;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,6 +45,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     private static int RESULT_LOAD_IMAGE = 1;
     Intent i;
     File file;
+    Bitmap lastPicTaken;
     private Effect mEffect;
     public static Bitmap inputBitmap;
     int currentEffect;
@@ -54,6 +58,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
     private boolean saveFrame;
     private boolean effectOn, changeImage;
     private boolean mInitialized = false;
+    private boolean sendImage;
     SeekBar seekBar;
     TextView effectText;
     ImageButton share;
@@ -81,9 +86,10 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         effectCount = 0;
         vBright = vContrast = 1;
         vSat = vGrain = vFillLight = 0f;
-        saveFrame = effectOn = false;
+        saveFrame = sendImage = effectOn = false;
         initialize();
         changeImage = false; //Check if user used select photo button
+        share.setOnClickListener(this);
     }
 
     private void loadTextures(){
@@ -123,7 +129,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
                 break;
             case R.id.bt5:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_ROTATE);
-                mEffect.setParameter("angle", 180);
+                mEffect.setParameter("angle", 90);
                 break;
             case R.id.bt6:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SATURATE);
@@ -271,8 +277,11 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
             case R.id.btSelect:
                 selectPicture();
                 break;
+            case R.id.icon:
+                sendImage = true;
+                shareInstagram("image/*", "cHIcken");
+                break;
         }
-
         initEffect();
     }
 
@@ -320,6 +329,11 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
                 saveBitmap(takeScreenshot(gl));
                 saveFrame = false;
             }
+        }
+
+        if(sendImage){
+            lastPicTaken = takeScreenshot(gl);
+            sendImage = false;
         }
     }
 
@@ -437,4 +451,42 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
             changeImage = true;
         }
     }
+
+    private void shareInstagram(String type, String caption){
+
+        // Create the new Intent using the 'Send' action.
+        Intent share = new Intent(Intent.ACTION_SEND);
+
+        // Set the MIME type
+        share.setType(type);
+
+        Uri uri = getImageUri(this,lastPicTaken);
+        // Add the URI and the caption to the Intent.
+        if(uri != null)
+            share.putExtra(Intent.EXTRA_STREAM, uri);
+        share.putExtra(Intent.EXTRA_TEXT, caption);
+
+        // Broadcast the Intent.
+        startActivity(Intent.createChooser(share, "Share to"));
+    }
+
+    //Used to get URI of bitmap image
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
+        //pauseThread();
+        if(inImage == null)
+            return null;
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    /*private void pauseThread(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+
+            }
+        }, 2000);
+    }*/
 }
