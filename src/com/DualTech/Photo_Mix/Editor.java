@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -217,8 +218,19 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         switch (v.getId()){
             case R.id.bt0:
                 LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = layoutInflater.inflate(R.layout.color_pop, null);
+                View popupView = layoutInflater.inflate(R.layout.color_pop, (LinearLayout)findViewById(R.id.popup));
                 final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+                Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
+                btnDismiss.setOnClickListener(new Button.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {popupWindow.dismiss();}});
+
+                Button btnOk = (Button)popupView.findViewById(R.id.ok);
+                btnOk.setOnClickListener(new Button.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {popupWindow.dismiss();}});
                 break;
             case R.id.bt1:
                 effectOn = true;
