@@ -150,8 +150,6 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
             e.printStackTrace();
         }finally {
             try{
-
-                Toast.makeText(getApplicationContext(), "Saved to app folder as "+ fname, Toast.LENGTH_SHORT ).show();
                 out.flush();
                 out.close();
                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
