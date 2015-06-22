@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:paddingLeft="5dip"
     android:paddingBottom="3dip"
-    android:background="#323331">
+    android:background="#ffedffe6">
 
     <ImageView
         android:id="@+id/header"
@@ -27,8 +27,9 @@
             android:layout_height="wrap_content"
             android:text="Save"
             android:textSize="20sp"
-            android:textColor="#f2f438"
+            android:textColor="#ff816dff"
             android:layout_marginRight="20dp"
+
             android:background="@android:color/transparent"
             android:id="@+id/btSave"/>
 
@@ -38,6 +39,8 @@
             android:background="@drawable/share_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="Share"/>
 
     </LinearLayout>

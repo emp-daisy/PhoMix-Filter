@@ -167,6 +167,8 @@ public class Editor extends Activity implements GLSurfaceView.Renderer,  SelectC
             e.printStackTrace();
         }finally {
             try{
+
+                Toast.makeText(getApplicationContext(), "Saved to app folder as "+ fname, Toast.LENGTH_SHORT ).show();
                 out.flush();
                 out.close();
                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -341,7 +343,7 @@ public class Editor extends Activity implements GLSurfaceView.Renderer,  SelectC
 
     @Override
     public void colorChanged(int color) {
-        Editor.this.findViewById(R.id.effectsView).setBackgroundColor(color);
+        Editor.this.findViewById(R.id.linny).setBackgroundColor(color);
     }
 
     public void getColor(){

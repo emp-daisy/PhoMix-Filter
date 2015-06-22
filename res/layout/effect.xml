@@ -106,15 +106,22 @@
                 />
             </LinearLayout>
         </HorizontalScrollView>
-
-    <android.opengl.GLSurfaceView
+    <LinearLayout
+        android:id="@+id/linny"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/effectsView"
         android:layout_below="@+id/btSave"
         android:layout_above="@+id/skBar"
         android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true">
+        <android.opengl.GLSurfaceView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:id="@+id/effectsView"/>
+    </LinearLayout>
+
+
 
     <SeekBar
         android:layout_width="match_parent"
