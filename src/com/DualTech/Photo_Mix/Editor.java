@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.effect.Effect;
 import android.media.effect.EffectContext;
 import android.media.effect.EffectFactory;
@@ -34,7 +35,7 @@ import java.util.Locale;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class Editor extends Activity implements GLSurfaceView.Renderer{
+public class Editor extends Activity implements GLSurfaceView.Renderer,  SelectColor.OnColorChangedListener{
 
     static ArrayList<Button> effectList;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
@@ -68,7 +69,7 @@ public class Editor extends Activity implements GLSurfaceView.Renderer{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.effect);
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.header);
 
         if(call == 0)
             inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
@@ -336,6 +337,15 @@ public class Editor extends Activity implements GLSurfaceView.Renderer{
             lastPicTaken = takeScreenshot(gl);
             sendImage = false;
         }
+    }
+
+    @Override
+    public void colorChanged(int color) {
+        Editor.this.findViewById(R.id.effectsView).setBackgroundColor(color);
+    }
+
+    public void getColor(){
+        new SelectColor(this, Editor.this, Color.WHITE).show();
     }
 
     public Bitmap takeScreenshot(GL10 mGL) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,10 +24,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Grid extends Activity implements View.OnClickListener {
+public class Grid extends Activity implements View.OnClickListener, SelectColor.OnColorChangedListener {
 
-    Button SaveGrid;
-    Button EditGrid;
+    Button SaveGrid, EditGrid, ColBorder;
     static int currentImgID = 0;
     LinearLayout l1, l2, l3;
     Intent i;
@@ -81,15 +81,12 @@ public class Grid extends Activity implements View.OnClickListener {
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
-    //gets the image of the grid
-    public Bitmap getGrid(){
-        return img_bitmap;
-    }
-
     //Typical Initializing of buttons
     public void initialize(){
         SaveGrid = (Button) findViewById(R.id.savegrid);
         EditGrid = (Button) findViewById(R.id.grideffect);
+        ColBorder = (Button) findViewById(R.id.grid_col);
+        ColBorder.setOnClickListener(this);
         SaveGrid.setOnClickListener(this);
         EditGrid.setOnClickListener(this);
         l1 = (LinearLayout) findViewById(R.id.linny);
@@ -129,6 +126,10 @@ public class Grid extends Activity implements View.OnClickListener {
     public void onClick(View v) {
 
         switch(v.getId()){
+            case R.id.grid_col: //Border color
+                new SelectColor(this, Grid.this, Color.WHITE).show();
+                break;
+
             case R.id.grideffect: //Goes to Editor
                 try
                 {
@@ -208,6 +209,11 @@ public class Grid extends Activity implements View.OnClickListener {
             myPhotoImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 
         }
+    }
+
+    @Override
+    public void colorChanged(int color) {
+        Grid.this.findViewById(R.id.linny).setBackgroundColor(color);
     }
 
 }

@@ -12,7 +12,8 @@
         android:theme="@android:style/Theme.NoTitleBar"
         android:icon="@drawable/ic_launcher">
         <activity
-            android:name=".SplashMain">
+            android:name=".SplashMain"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

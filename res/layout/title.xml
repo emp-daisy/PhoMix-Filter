@@ -23,23 +23,17 @@ android:background="#323331">
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Save"
+        style="?android:attr/borderlessButtonStyle"
         android:id="@+id/btSave"/>
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share"
-        android:paddingRight="5dip" />
 
     <ImageButton
         android:id="@+id/icon"
         android:src="@drawable/share_icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="match_parent"/>
+D
 </LinearLayout>
 
 </LinearLayout>

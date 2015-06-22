@@ -10,7 +10,7 @@
         android:orientation="horizontal"
         android:background="#33ff0A"
         android:weightSum="2"
-        android:layout_above="@+id/savegrid"
+        android:layout_above="@+id/btinclude"
         android:padding="10dp"
         android:layout_alignParentTop="true"
         android:id="@+id/linny">
@@ -82,21 +82,13 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/btinclude"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/savegrid"
-        android:layout_marginRight="77dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentBottom="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Effect"
-        android:id="@+id/grideffect"
-        android:layout_alignTop="@+id/savegrid"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="90dp"/>
+        <include
+            layout="@layout/effect_footer"/>
+    </LinearLayout>
 </RelativeLayout>

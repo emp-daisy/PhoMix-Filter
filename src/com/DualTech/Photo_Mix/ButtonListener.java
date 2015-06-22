@@ -1,4 +1,5 @@
 package com.DualTech.Photo_Mix;
+import android.graphics.Color;
 import android.view.View;
 
 /**
@@ -84,6 +85,9 @@ public class ButtonListener implements View.OnClickListener {
             case R.id.icon:
                 editor.sendImage = true;
                 editor.shareInstagram("image/*", "cHIcken");
+                break;
+            case R.id.bt0:
+                editor.getColor();
                 break;
         }
         editor.initEffect();
