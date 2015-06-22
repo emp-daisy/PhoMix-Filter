@@ -15,10 +15,8 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
@@ -36,35 +34,35 @@ import java.util.Locale;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class Editor extends Activity implements View.OnClickListener, GLSurfaceView.Renderer, SeekBar.OnSeekBarChangeListener{
+public class Editor extends Activity implements GLSurfaceView.Renderer{
 
     static ArrayList<Button> effectList;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
     Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder;
-    GLSurfaceView glView;
     private static int RESULT_LOAD_IMAGE = 1;
+    GLSurfaceView glView;
     Intent i;
     File file;
+    static int currentEffect;
     Bitmap lastPicTaken;
-    private Effect mEffect;
     public static Bitmap inputBitmap;
-    int currentEffect;
-    private EffectContext mEffectContext;
-    private TextureRenderer mTexRenderer = new TextureRenderer();
-    private int[] mTextures = new int[2];
-    int textureWidth, textureHeight, effectCount;
     float vBright, vContrast, vSat, vGrain, vFillLight;
     Button btSave, btSelect;
-    private boolean saveFrame;
-    private boolean effectOn, changeImage;
-    private boolean mInitialized = false;
-    private boolean sendImage;
     SeekBar seekBar;
     TextView effectText;
     ImageButton share;
     static int call=0;
     static int picsTaken = 0;
     FileOutputStream out;
+    public Effect mEffect;
+    public EffectContext mEffectContext;
+    public TextureRenderer mTexRenderer = new TextureRenderer();
+    public int[] mTextures = new int[2];
+    int textureWidth, textureHeight;
+    public boolean saveFrame;
+    public boolean effectOn, changeImage;
+    public boolean mInitialized = false;
+    public boolean sendImage;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +70,6 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         setContentView(R.layout.effect);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);
 
-        share = (ImageButton) findViewById(R.id.icon);
         if(call == 0)
             inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
         else
@@ -82,29 +79,133 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         glView.setEGLContextClientVersion(2);
         glView.setRenderer(this);
         glView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-        currentEffect = 0;
-        effectCount = 0;
         vBright = vContrast = 1;
         vSat = vGrain = vFillLight = 0f;
-        saveFrame = sendImage = effectOn = false;
+
+        effectOn = false;
         initialize();
         changeImage = false; //Check if user used select photo button
-        share.setOnClickListener(this);
     }
 
-    private void loadTextures(){
-        GLES20.glGenTextures(2, mTextures, 0);
-        textureHeight = inputBitmap.getHeight();
-        textureWidth = inputBitmap.getWidth();
+    public void initialize() {
+        share = (ImageButton) findViewById(R.id.icon);
+        seekBar = (SeekBar) findViewById(R.id.skBar);
+        seekBar.setVisibility(View.INVISIBLE);
+        seekBar.setOnSeekBarChangeListener(new SeekListener(this));
+        effectList = new ArrayList<Button>();
+        effectText = (TextView)findViewById(R.id.tvEffect);
+        btBorder = (Button)findViewById(R.id.bt0);
+        btBright = (Button)findViewById(R.id.bt1);
+        btContrast = (Button)findViewById(R.id.bt2);
+        btNegative = (Button)findViewById(R.id.bt3);
+        btGrayScale = (Button)findViewById(R.id.bt4);
+        btRotate = (Button)findViewById(R.id.bt5);
+        btSaturation = (Button)findViewById(R.id.bt6);
+        btSepia = (Button)findViewById(R.id.bt7);
+        btFlip = (Button)findViewById(R.id.bt8);
+        btGrain = (Button)findViewById(R.id.bt9);
+        btFillLight = (Button)findViewById(R.id.bt10);
+        effectList.add(btBorder);
+        effectList.add(btBright);
+        effectList.add(btContrast);
+        effectList.add(btNegative);
+        effectList.add(btGrayScale);
+        effectList.add(btRotate);
+        effectList.add(btSaturation);
+        effectList.add(btSepia);
+        effectList.add(btFlip);
+        effectList.add(btGrain);
+        effectList.add(btFillLight);
+        btSelect = (Button)findViewById(R.id.btSelect);
+        btSave = (Button)findViewById(R.id.btSave);
+        btSelect.setOnClickListener(new ButtonListener(this));
+        btSave.setOnClickListener(new ButtonListener(this));
+        for(Button x : effectList){
+            x.setOnClickListener(new ButtonListener(this));
+        }
+        share.setOnClickListener(new ButtonListener(this));
+    }
 
-        mTexRenderer.updateTextureSize(textureWidth, textureHeight);
+    public void selectPicture(){
+        i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+        i = new Intent("com.DualTech.Photo_Mix.EDITOR");
+    }
 
-        // Upload to texture
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[0]);
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, inputBitmap, 0);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Code to use selected image
+        if(resultCode == RESULT_OK){
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
 
-        // Set texture parameters
-        GLToolBox.initTexParams();
+            // my ImageView
+            inputBitmap = BitmapFactory.decodeFile(picturePath);
+            changeImage = true;
+        }
+    }
+
+    public void saveBitmap(Bitmap bitmap) {
+        String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
+        String fname = "/PMX_"+ file_sub +".jpg";
+        if (!DIR.exists()) {
+            boolean bo = DIR.mkdir();
+        }
+        file = new File(DIR.getAbsolutePath(), fname);
+        try {
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                out.flush();
+                out.close();
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                intent.setData(Uri.fromFile(file));
+                sendBroadcast(intent);
+                Log.i("TAG", "Image SAVED==========" + file.getAbsolutePath());
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void shareInstagram(String type, String caption){
+
+        // Create the new Intent using the 'Send' action.
+        Intent share = new Intent(Intent.ACTION_SEND);
+
+        // Set the MIME type
+        share.setType(type);
+
+        Uri uri = getImageUri(this,lastPicTaken);
+        // Add the URI and the caption to the Intent.
+        if(uri != null)
+            share.putExtra(Intent.EXTRA_STREAM, uri);
+        share.putExtra(Intent.EXTRA_TEXT, caption);
+
+        // Broadcast the Intent.
+        startActivity(Intent.createChooser(share, "Share to"));
+    }
+
+    //Used to get URI of bitmap image
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
+        //pauseThread();
+        if(inImage == null)
+            return null;
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public void initEffect(){
@@ -112,7 +213,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         /*if(mEffect != null) {
             mEffect.release();
         }*/
-        switch (currentEffect){
+        switch (Editor.currentEffect){
             case R.id.bt1:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_BRIGHTNESS);
                 mEffect.setParameter("brightness", vBright);
@@ -154,137 +255,6 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         glView.requestRender();
     }
 
-    public void initialize() {
-        seekBar = (SeekBar) findViewById(R.id.skBar);
-        seekBar.setVisibility(View.INVISIBLE);
-        seekBar.setOnSeekBarChangeListener(this);
-        effectList = new ArrayList<Button>();
-        effectText = (TextView)findViewById(R.id.tvEffect);
-        btBorder = (Button)findViewById(R.id.bt0);
-        btBright = (Button)findViewById(R.id.bt1);
-        btContrast = (Button)findViewById(R.id.bt2);
-        btNegative = (Button)findViewById(R.id.bt3);
-        btGrayScale = (Button)findViewById(R.id.bt4);
-        btRotate = (Button)findViewById(R.id.bt5);
-        btSaturation = (Button)findViewById(R.id.bt6);
-        btSepia = (Button)findViewById(R.id.bt7);
-        btFlip = (Button)findViewById(R.id.bt8);
-        btGrain = (Button)findViewById(R.id.bt9);
-        btFillLight = (Button)findViewById(R.id.bt10);
-        effectList.add(btBorder);
-        effectList.add(btBright);
-        effectList.add(btContrast);
-        effectList.add(btNegative);
-        effectList.add(btGrayScale);
-        effectList.add(btRotate);
-        effectList.add(btSaturation);
-        effectList.add(btSepia);
-        effectList.add(btFlip);
-        effectList.add(btGrain);
-        effectList.add(btFillLight);
-        btSelect = (Button)findViewById(R.id.btSelect);
-        btSave = (Button)findViewById(R.id.btSave);
-        btSelect.setOnClickListener(this);
-        btSave.setOnClickListener(this);
-        for(Button x : effectList){
-            x.setOnClickListener(this);
-        }
-    }
-
-    private void applyEffect() {
-        mEffect.apply(mTextures[0], textureWidth, textureHeight, mTextures[1]);
-    }
-
-    private void renderResult() {
-        if (effectOn) {
-            // if no effect is chosen, just render the original bitmap
-            mTexRenderer.renderTexture(mTextures[1]);
-        }
-        else {
-            //saveFrame=true;
-            // render the result of applyEffect()
-            mTexRenderer.renderTexture(mTextures[0]);
-        }
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        seekBar.setVisibility(View.INVISIBLE);
-        seekBar.setProgress(10);
-        effectText.setText("");
-        picsTaken = 0;
-        switch (v.getId()){
-            case R.id.bt0:
-                LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = layoutInflater.inflate(R.layout.color_pop, null);
-                final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                break;
-            case R.id.bt1:
-                effectOn = true;
-                seekBar.setVisibility(View.VISIBLE);
-                currentEffect = R.id.bt1;
-                break;
-            case R.id.bt2:
-                effectOn = true;
-                seekBar.setVisibility(View.VISIBLE);
-                currentEffect = R.id.bt2;
-                break;
-            case R.id.bt3:
-                effectOn = true;
-                seekBar.setVisibility(View.INVISIBLE);
-                currentEffect = R.id.bt3;
-                break;
-            case R.id.bt4:
-                effectOn = true;
-                seekBar.setVisibility(View.INVISIBLE);
-                currentEffect = R.id.bt4;
-                break;
-            case R.id.bt5:
-                effectOn = true;
-                seekBar.setVisibility(View.INVISIBLE);
-                currentEffect = R.id.bt5;
-                break;
-            case R.id.bt6:
-                effectOn = true;
-                seekBar.setVisibility(View.VISIBLE);
-                currentEffect = R.id.bt6;
-                break;
-            case R.id.bt7:
-                effectOn = true;
-                seekBar.setVisibility(View.INVISIBLE);
-                currentEffect = R.id.bt7;
-                break;
-            case R.id.bt8:
-                effectOn = true;
-                seekBar.setVisibility(View.INVISIBLE);
-                currentEffect = R.id.bt8;
-                break;
-            case R.id.bt9:
-                effectOn = true;
-                seekBar.setVisibility(View.VISIBLE);
-                currentEffect = R.id.bt9;
-                break;
-            case R.id.bt10:
-                effectOn = true;
-                seekBar.setVisibility(View.VISIBLE);
-                currentEffect = R.id.bt10;
-                break;
-            case R.id.btSave:
-                saveFrame = true;
-                Toast.makeText(getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT ).show();
-                break;
-            case R.id.btSelect:
-                selectPicture();
-                break;
-            case R.id.icon:
-                sendImage = true;
-                shareInstagram("image/*", "cHIcken");
-                break;
-        }
-        initEffect();
-    }
-
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
@@ -297,9 +267,40 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
         }
     }
 
+    public void applyEffect() {
+        mEffect.apply(mTextures[0], textureWidth, textureHeight, mTextures[1]);
+    }
+
+    public void renderResult() {
+        if (effectOn) {
+            // if no effect is chosen, just render the original bitmap
+            mTexRenderer.renderTexture(mTextures[1]);
+        }
+        else {
+            //saveFrame=true;
+            // render the result of applyEffect()
+            mTexRenderer.renderTexture(mTextures[0]);
+        }
+    }
+
+    public void loadTextures(){
+        GLES20.glGenTextures(2, mTextures, 0);
+        textureHeight = Editor.inputBitmap.getHeight();
+        textureWidth = Editor.inputBitmap.getWidth();
+
+        mTexRenderer.updateTextureSize(textureWidth, textureHeight);
+
+        // Upload to texture
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[0]);
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Editor.inputBitmap, 0);
+
+        // Set texture parameters
+        GLToolBox.initTexParams();
+    }
+
     @Override
     public void onDrawFrame(GL10 gl) {
-        //Initializes in the beginning
+//Initializes in the beginning
         if (!mInitialized) {
             //Only need to do this once
             mEffectContext = EffectContext.createWithCurrentGlContext();
@@ -310,7 +311,7 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
         //If user selects photo using select button
         //Load the textures again so the textures uses new bitmap
-        if(changeImage){
+        if (changeImage) {
             loadTextures();
             changeImage = false;
         }
@@ -325,53 +326,16 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
         //Save the Photo
         if (saveFrame) {
-            if(picsTaken == 0){
+            if (picsTaken == 0) {
                 saveBitmap(takeScreenshot(gl));
                 saveFrame = false;
             }
         }
 
-        if(sendImage){
+        if (sendImage) {
             lastPicTaken = takeScreenshot(gl);
             sendImage = false;
         }
-    }
-
-    //SeekBar so use can use the bar to choose value
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        switch(currentEffect){
-            case R.id.bt1:
-                vBright = (float)progress / 6;
-                effectText.setText("Brightness: " + (vBright * 100) + "%");
-                break;
-            case R.id.bt2:
-                vContrast = (float)progress / 10;
-                effectText.setText("Contrast: " + (vContrast * 100) + "%");
-                break;
-            case R.id.bt6:
-                if(progress <= 5){
-                    vSat = -(progress / 20);
-                }else{
-                    vSat = progress / 20;
-                }
-                effectText.setText("Saturation: " + (vSat * 100) + "%");
-                break;
-            case R.id.bt9:
-                vGrain = (float)progress / 12;
-                effectText.setText("Grain: " + (vGrain * 100) + "%");
-                break;
-            case R.id.bt10:
-                vFillLight = (float)progress / 40;
-                effectText.setText("Fill-Light: " + (vFillLight * 100) + "%");
-                break;
-        }
-    }
-
-    public void selectPicture(){
-        i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_IMAGE);
-        i = new Intent("com.DualTech.Photo_Mix.EDITOR");
     }
 
     public Bitmap takeScreenshot(GL10 mGL) {
@@ -391,94 +355,8 @@ public class Editor extends Activity implements View.OnClickListener, GLSurfaceV
 
         Bitmap mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         mBitmap.copyPixelsFromBuffer(ibt);
-        picsTaken++;
+        Editor.picsTaken++;
         return mBitmap;
-    }
-
-    private void saveBitmap(Bitmap bitmap) {
-        String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
-        String fname = "/PMX_"+ file_sub +".jpg";
-        if (!DIR.exists()) {
-            boolean bo = DIR.mkdir();
-        }
-        file = new File (DIR.getAbsolutePath(), fname);
-        try {
-            out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            try{
-                out.flush();
-                out.close();
-                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                intent.setData(Uri.fromFile(file));
-                sendBroadcast(intent);
-                Log.i("TAG", "Image SAVED=========="+file.getAbsolutePath());
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Code to use selected image
-        if(resultCode == RESULT_OK){
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            // my ImageView
-            inputBitmap = BitmapFactory.decodeFile(picturePath);
-            changeImage = true;
-        }
-    }
-
-    private void shareInstagram(String type, String caption){
-
-        // Create the new Intent using the 'Send' action.
-        Intent share = new Intent(Intent.ACTION_SEND);
-
-        // Set the MIME type
-        share.setType(type);
-
-        Uri uri = getImageUri(this,lastPicTaken);
-        // Add the URI and the caption to the Intent.
-        if(uri != null)
-            share.putExtra(Intent.EXTRA_STREAM, uri);
-        share.putExtra(Intent.EXTRA_TEXT, caption);
-
-        // Broadcast the Intent.
-        startActivity(Intent.createChooser(share, "Share to"));
-    }
-
-    //Used to get URI of bitmap image
-    private Uri getImageUri(Context inContext, Bitmap inImage) {
-        //pauseThread();
-        if(inImage == null)
-            return null;
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
     }
 
     /*private void pauseThread(){
