@@ -1,10 +1,6 @@
 package com.DualTech.Photo_Mix;
-import android.graphics.Color;
 import android.view.View;
 
-/**
- * Created by tunde_000 on 21/06/2015.
- */
 public class ButtonListener implements View.OnClickListener {
 
     Editor editor;
@@ -26,70 +22,74 @@ public class ButtonListener implements View.OnClickListener {
                 final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
                 break;*/
             case R.id.bt1:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt1;
                 break;
             case R.id.bt2:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt2;
                 break;
             case R.id.bt3:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt3;
                 break;
             case R.id.bt4:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt4;
                 break;
             case R.id.bt5:
-                editor.effectOn = true;
+                if(editor.angle == 360)
+                    editor.angle = 0;
+                else
+                    editor.angle += 90;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt5;
                 break;
             case R.id.bt6:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt6;
                 break;
             case R.id.bt7:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt7;
                 break;
             case R.id.bt8:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt8;
                 break;
             case R.id.bt9:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt9;
                 break;
             case R.id.bt10:
-                editor.effectOn = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt10;
                 break;
             case R.id.btSave:
-                editor.saveFrame = true;
+                editor.surfaceViewRenderer.saveFrame = true;
                 //Toast.makeText(getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btSelect:
                 editor.selectPicture();
                 break;
             case R.id.icon:
-                editor.sendImage = true;
+                editor.surfaceViewRenderer.sendImage = true;
                 editor.shareInstagram("image/*", "cHIcken");
                 break;
             case R.id.bt0:
                 editor.getColor();
                 break;
         }
-        editor.initEffect();
+        editor.surfaceViewRenderer.initEffect();
     }
 }
