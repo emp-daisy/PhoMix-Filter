@@ -12,11 +12,9 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -150,14 +148,11 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
             e.printStackTrace();
         }finally {
             try{
-
-                Toast.makeText(getApplicationContext(), "Saved to app folder as "+ fname, Toast.LENGTH_SHORT ).show();
                 out.flush();
                 out.close();
                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 intent.setData(Uri.fromFile(file));
                 sendBroadcast(intent);
-                Log.i("TAG", "Image SAVED==========" + file.getAbsolutePath());
             }catch (IOException e){
                 e.printStackTrace();
             }

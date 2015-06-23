@@ -23,13 +23,23 @@
         android:paddingRight="15dp">
 
         <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select "
+            android:textSize="20sp"
+            android:textColor="#ff816dff"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/transparent"
+            android:id="@+id/btSelect"/>
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save"
             android:textSize="20sp"
             android:textColor="#ff816dff"
             android:layout_marginRight="20dp"
-
             android:background="@android:color/transparent"
             android:id="@+id/btSave"/>
 

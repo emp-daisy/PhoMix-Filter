@@ -3,11 +3,12 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    
+
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:id="@+id/horizontalScrollView"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
@@ -15,7 +16,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="35dp">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,7 +129,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/skBar"
-        android:padding="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
         android:secondaryProgress="0"
         android:layout_above="@+id/horizontalScrollView"
         android:layout_alignParentLeft="true"
@@ -144,25 +148,6 @@
         android:layout_above="@+id/skBar"
         android:layout_alignParentLeft="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:layout_marginRight="20dp"
-        android:id="@+id/btSave"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Photo"
-        android:layout_marginRight="20dp"
-        android:id="@+id/btSelect"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/btSave"/>
 
 
 </RelativeLayout>

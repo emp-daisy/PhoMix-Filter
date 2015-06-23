@@ -1,5 +1,6 @@
 package com.DualTech.Photo_Mix;
 import android.view.View;
+import android.widget.Toast;
 
 public class ButtonListener implements View.OnClickListener {
 
@@ -77,7 +78,7 @@ public class ButtonListener implements View.OnClickListener {
                 break;
             case R.id.btSave:
                 editor.surfaceViewRenderer.saveFrame = true;
-                //Toast.makeText(getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT).show();
+                Toast.makeText(editor.getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btSelect:
                 editor.selectPicture();
