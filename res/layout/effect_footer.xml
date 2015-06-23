@@ -8,6 +8,7 @@
             android:layout_height="wrap_content"
             android:text="Save"
             android:id="@+id/savegrid"
+            android:background="@drawable/bt_ch_grid"
             android:layout_alignParentLeft="true"/>
 
         <Button
@@ -15,6 +16,7 @@
             android:layout_height="wrap_content"
             android:text="Border"
             android:id="@+id/grid_col"
+            android:background="@drawable/bt_ch_grid"
             android:layout_centerHorizontal="true"/>
 
         <Button
@@ -22,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Effect"
             android:id="@+id/grideffect"
+            android:background="@drawable/bt_ch_grid"
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
