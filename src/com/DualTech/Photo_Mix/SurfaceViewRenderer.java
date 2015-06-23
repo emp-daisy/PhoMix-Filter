@@ -6,6 +6,8 @@ import android.media.effect.EffectFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.widget.LinearLayout;
+
 import java.nio.IntBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -68,10 +70,13 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
     }
 
     public Bitmap takeScreenshot(GL10 mGL) {
-        final int width = glView.getWidth();
-        final int height = glView.getHeight();
+        //final int width = glView.getWidth();
+        //final int height = glView.getHeight();
+        final int width = editor.l1.getWidth();
+        final int height = editor.l1.getHeight();
         IntBuffer ib = IntBuffer.allocate(width * height);
         IntBuffer ibt = IntBuffer.allocate(width * height);
+
         mGL.glReadPixels(0, 0, width, height, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE, ib);
 
         // Convert upside down mirror-reversed image to right-side up normal

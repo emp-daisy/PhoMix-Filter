@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -40,6 +41,7 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         switch (ChooseGrid.getChosenGrid()){
             case 21:
                 setContentView(R.layout.grid_2a);
@@ -72,6 +74,8 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
                 setContentView(R.layout.grid);
                 break;
         }
+
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);
         initialize();
     }
 
@@ -83,7 +87,7 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
 
     //Typical Initializing of buttons
     public void initialize(){
-        SaveGrid = (Button) findViewById(R.id.savegrid);
+        SaveGrid = (Button) findViewById(R.id.btSave);
         EditGrid = (Button) findViewById(R.id.grideffect);
         ColBorder = (Button) findViewById(R.id.grid_col);
         ColBorder.setOnClickListener(this);
@@ -145,7 +149,7 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
                 }
                 break;
 
-            case R.id.savegrid: //Saves the Image
+            case R.id.btSave: //Saves the Image
                 String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
                 String file_name =  "/PMX_"+ file_sub + ".jpg";
                 //creates the directory if it doesn't exist

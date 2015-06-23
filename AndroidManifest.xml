@@ -35,7 +35,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Grid">
+        <activity android:name=".Grid" android:theme="@style/action">
 
             <intent-filter>
                 <action android:name="com.DualTech.Photo_Mix.GRID" />

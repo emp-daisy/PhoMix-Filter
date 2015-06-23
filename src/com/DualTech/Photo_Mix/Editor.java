@@ -43,10 +43,12 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
     SeekBar seekBar;
     TextView effectText;
     ImageButton share;
+    LinearLayout l1;
     static int call=0;
     static int picsTaken = 0;
     int angle;
     FileOutputStream out; //Used for rotate
+    FileOutputStream ostream;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,10 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         angle = 0;
         if(call == 0)
             inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
-        else
+        else if(call == 1)
             inputBitmap = Grid.img_bitmap;
+        else if(call == 2)
+            inputBitmap = Camera.img_bitmap;
 
         glView = (GLSurfaceView) findViewById(R.id.effectsView);
         surfaceViewRenderer = new SurfaceViewRenderer(this, glView);
@@ -70,7 +74,8 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
     }
 
     public void initialize() {
-        share = (ImageButton) findViewById(R.id.icon);
+        l1 = (LinearLayout) findViewById(R.id.linny);
+        share = (ImageButton) findViewById(R.id.share_icon);
         seekBar = (SeekBar) findViewById(R.id.skBar);
         seekBar.setVisibility(View.INVISIBLE);
         seekBar.setOnSeekBarChangeListener(new SeekListener(this));
@@ -160,6 +165,39 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
 
     }
 
+    public void saveImg(){
+        String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
+        String file_name =  "/PMX_"+ file_sub + ".jpg";
+        //creates the directory if it doesn't exist
+        if (!DIR.exists()) {
+            boolean bo = DIR.mkdir();
+        }
+        file = new File(DIR.getAbsolutePath(), file_name);
+        try
+        {
+            l1.setDrawingCacheEnabled(true);
+            boolean b = file.createNewFile();
+            ostream = new FileOutputStream(file);
+            l1.getDrawingCache().compress(Bitmap.CompressFormat.JPEG, 100, ostream);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                ostream.flush();
+                ostream.close();
+                Toast.makeText(getApplicationContext(), "Saved to app folder as " + file_name, Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            intent.setData(Uri.fromFile(file));
+            sendBroadcast(intent);
+        }
+    }
+
     public void shareInstagram(String type, String caption){
 
         // Create the new Intent using the 'Send' action.
@@ -198,12 +236,4 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         new SelectColor(this, Editor.this, Color.WHITE).show();
     }
 
-    /*private void pauseThread(){
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-
-            }
-        }, 2000);
-    }*/
 }
