@@ -6,7 +6,6 @@ import android.media.effect.EffectFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
-import android.widget.LinearLayout;
 
 import java.nio.IntBuffer;
 
@@ -24,8 +23,7 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
     int textureWidth, textureHeight;
     public boolean saveFrame;
     public boolean mInitialized = false;
-    public boolean sendImage;
-    private int angle;
+    static public boolean sendImage;
 
     public SurfaceViewRenderer(Editor editor, GLSurfaceView glView){
         this.editor = editor;
@@ -35,7 +33,6 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
         glView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         currentEffect = 0;
         sendImage = false;
-        angle = 0;
     }
 
     public void loadTextures(){
@@ -70,8 +67,6 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
     }
 
     public Bitmap takeScreenshot(GL10 mGL) {
-        //final int width = glView.getWidth();
-        //final int height = glView.getHeight();
         final int width = editor.l1.getWidth();
         final int height = editor.l1.getHeight();
         IntBuffer ib = IntBuffer.allocate(width * height);
@@ -95,9 +90,6 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
 
     public void initEffect(){
         EffectFactory effectFactory = mEffectContext.getFactory();
-        /*if(mEffect != null) {
-            mEffect.release();
-        }*/
         switch (Editor.currentEffect){
             case R.id.bt1:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_BRIGHTNESS);
@@ -189,7 +181,8 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
         }
 
         if (sendImage) {
-            editor.lastPicTaken = takeScreenshot(gl);
+            Editor.lastPicTaken = takeScreenshot(gl);
+            editor.share("image/*", "cHIcken");
             sendImage = false;
         }
     }

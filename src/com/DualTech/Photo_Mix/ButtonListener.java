@@ -77,7 +77,6 @@ public class ButtonListener implements View.OnClickListener {
                 Editor.currentEffect = R.id.bt10;
                 break;
             case R.id.btSave:
-                //editor.saveImg();
                 editor.surfaceViewRenderer.saveFrame = true;
                 Toast.makeText(editor.getApplicationContext(), "Saved to app folder", Toast.LENGTH_SHORT).show();
                 break;
@@ -85,8 +84,7 @@ public class ButtonListener implements View.OnClickListener {
                 editor.selectPicture();
                 break;
             case R.id.share_icon:
-                editor.surfaceViewRenderer.sendImage = true;
-                editor.shareInstagram("image/*", "cHIcken");
+                SurfaceViewRenderer.sendImage = true;
                 break;
             case R.id.bt0:
                 editor.getColor();

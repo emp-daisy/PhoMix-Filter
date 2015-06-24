@@ -36,7 +36,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
     File file;
     static int currentEffect;
     public static boolean effectOn, changeImage;
-    Bitmap lastPicTaken;
+    static Bitmap lastPicTaken;
     public static Bitmap inputBitmap;
     float vBright, vContrast, vSat, vGrain, vFillLight;
     Button btSave, btSelect;
@@ -165,40 +165,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
 
     }
 
-    public void saveImg(){
-        String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
-        String file_name =  "/PMX_"+ file_sub + ".jpg";
-        //creates the directory if it doesn't exist
-        if (!DIR.exists()) {
-            boolean bo = DIR.mkdir();
-        }
-        file = new File(DIR.getAbsolutePath(), file_name);
-        try
-        {
-            l1.setDrawingCacheEnabled(true);
-            boolean b = file.createNewFile();
-            ostream = new FileOutputStream(file);
-            l1.getDrawingCache().compress(Bitmap.CompressFormat.JPEG, 100, ostream);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                ostream.flush();
-                ostream.close();
-                Toast.makeText(getApplicationContext(), "Saved to app folder as " + file_name, Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            intent.setData(Uri.fromFile(file));
-            sendBroadcast(intent);
-        }
-    }
-
-    public void shareInstagram(String type, String caption){
+    public void share(String type, String caption){
 
         // Create the new Intent using the 'Send' action.
         Intent share = new Intent(Intent.ACTION_SEND);
@@ -208,8 +175,8 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
 
         Uri uri = getImageUri(this,lastPicTaken);
         // Add the URI and the caption to the Intent.
-        if(uri != null)
-            share.putExtra(Intent.EXTRA_STREAM, uri);
+        //if(uri != null)
+        share.putExtra(Intent.EXTRA_STREAM, uri);
         share.putExtra(Intent.EXTRA_TEXT, caption);
 
         // Broadcast the Intent.
@@ -218,9 +185,6 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
 
     //Used to get URI of bitmap image
     private Uri getImageUri(Context inContext, Bitmap inImage) {
-        //pauseThread();
-        if(inImage == null)
-            return null;
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
