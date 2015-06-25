@@ -1,6 +1,7 @@
 package com.DualTech.Photo_Mix;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,6 +30,7 @@ import java.util.Locale;
 public class Grid extends Activity implements View.OnClickListener, SelectColor.OnColorChangedListener {
 
     Button SaveGrid, EditGrid, ColBorder;
+    ImageButton btShare;
     static int currentImgID = 0;
     LinearLayout l1, l2, l3;
     Intent i;
@@ -42,6 +45,7 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        //l1.setLayoutParams().height = l1.getWidth();
         switch (ChooseGrid.getChosenGrid()){
             case 21:
                 setContentView(R.layout.grid_2a);
@@ -90,6 +94,8 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
         SaveGrid = (Button) findViewById(R.id.btSave);
         EditGrid = (Button) findViewById(R.id.grideffect);
         ColBorder = (Button) findViewById(R.id.grid_col);
+        btShare = (ImageButton) findViewById(R.id.share_icon);
+        btShare.setOnClickListener(this);
         ColBorder.setOnClickListener(this);
         SaveGrid.setOnClickListener(this);
         EditGrid.setOnClickListener(this);
@@ -126,12 +132,44 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
         }
     }
 
+    //Used to get URI of bitmap image
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public void share(String type, String caption){
+
+        // Create the new Intent using the 'Send' action.
+        Intent share = new Intent(Intent.ACTION_SEND);
+
+        // Set the MIME type
+        share.setType(type);
+
+        Uri uri = getImageUri(this,img_bitmap);
+        // Add the URI and the caption to the Intent.
+        //if(uri != null)
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        share.putExtra(Intent.EXTRA_TEXT, caption);
+
+        // Broadcast the Intent.
+        startActivity(Intent.createChooser(share, "Share to"));
+    }
+
     @Override
     public void onClick(View v) {
 
         switch(v.getId()){
             case R.id.grid_col: //Border color
                 new SelectColor(this, Grid.this, Color.WHITE).show();
+                break;
+
+            case R.id.share_icon:
+                l1.setDrawingCacheEnabled(true);
+                img_bitmap = l1.getDrawingCache();
+                share("image/*","My grid");
                 break;
 
             case R.id.grideffect: //Goes to Editor
@@ -210,7 +248,10 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
 
             // my ImageView
             ImageButton myPhotoImage = (ImageButton) findViewById(currentImgID);
-            myPhotoImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            int width = myPhotoImage.getWidth();
+            int height = myPhotoImage.getHeight();
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), width, height, true);
+            myPhotoImage.setImageBitmap(scaledBitmap);
 
         }
     }

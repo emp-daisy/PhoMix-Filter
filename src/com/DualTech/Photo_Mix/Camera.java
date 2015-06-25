@@ -1,6 +1,7 @@
 package com.DualTech.Photo_Mix;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,9 +10,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,9 +27,8 @@ import java.util.Locale;
  */
 public class Camera extends Activity implements View.OnClickListener{
 
-    Button btTakeAgain;
-    Button btEdit;
-    Button btSave;
+    Button btTakeAgain,btEdit, btSave;
+    ImageButton btShare;
     Intent i;
     static Bitmap bmp,img_bitmap;
     ImageView iv;
@@ -55,6 +57,8 @@ public class Camera extends Activity implements View.OnClickListener{
         btTakeAgain = (Button) findViewById(R.id.again);
         btSave = (Button) findViewById(R.id.btSave);
         btEdit = (Button) findViewById(R.id.edit);
+        btShare = (ImageButton) findViewById(R.id.share_icon);
+        btShare.setOnClickListener(this);
         btSave.setOnClickListener(this);
         btTakeAgain.setOnClickListener(this);
         btEdit.setOnClickListener(this);
@@ -74,7 +78,9 @@ public class Camera extends Activity implements View.OnClickListener{
                 startActivity(i);
                 break;
             case R.id.share_icon:
-
+                iv.setDrawingCacheEnabled(true);
+                img_bitmap = iv.getDrawingCache();
+                share("image/*","My grid");
                 break;
             case R.id.btSave:
                 String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
@@ -109,6 +115,32 @@ public class Camera extends Activity implements View.OnClickListener{
                 }
                 break;
         }
+    }
+
+    //Used to get URI of bitmap image
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public void share(String type, String caption){
+
+        // Create the new Intent using the 'Send' action.
+        Intent share = new Intent(Intent.ACTION_SEND);
+
+        // Set the MIME type
+        share.setType(type);
+
+        Uri uri = getImageUri(this,img_bitmap);
+        // Add the URI and the caption to the Intent.
+        //if(uri != null)
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        share.putExtra(Intent.EXTRA_TEXT, caption);
+
+        // Broadcast the Intent.
+        startActivity(Intent.createChooser(share, "Share to"));
     }
 
     @Override
