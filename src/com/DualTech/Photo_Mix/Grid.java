@@ -110,6 +110,7 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
         if(l3 != null)
             initiliazeImg(l3);
         for(ImageButton x: imgbuttons){
+            x.setImageResource(R.drawable.tap_select);
             x.setOnClickListener(this);
         }
     }

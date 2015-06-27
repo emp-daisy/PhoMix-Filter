@@ -57,7 +57,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.header);
         angle = 0;
         if(call == 0)
-            inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);
+            inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.click_select);
         else if(call == 1)
             inputBitmap = Grid.img_bitmap;
         else if(call == 2)
