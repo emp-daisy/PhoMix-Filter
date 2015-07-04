@@ -26,13 +26,16 @@
                 android:tag="effects"
                 android:id="@+id/bt0"
                 />
-            <Button
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Brightness"
-                android:background="@drawable/bt_effect"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_margin="0dp"
                 android:tag="effects"
                 android:id="@+id/bt1"
+                android:background="#000000"
                  />
             <Button
                 android:layout_width="wrap_content"

@@ -28,7 +28,8 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
 
     static ArrayList<Button> effectList;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
-    Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder;
+    Button btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder;
+    ImageButton btBright;
     private static int RESULT_LOAD_IMAGE = 1;
     GLSurfaceView glView;
     SurfaceViewRenderer surfaceViewRenderer;
@@ -48,7 +49,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
     static int picsTaken = 0;
     int angle;
     FileOutputStream out; //Used for rotate
-    FileOutputStream ostream;
+    //FileOutputStream ostream;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +83,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         effectList = new ArrayList<Button>();
         effectText = (TextView)findViewById(R.id.tvEffect);
         btBorder = (Button)findViewById(R.id.bt0);
-        btBright = (Button)findViewById(R.id.bt1);
+        btBright = (ImageButton)findViewById(R.id.bt1);
         btContrast = (Button)findViewById(R.id.bt2);
         btNegative = (Button)findViewById(R.id.bt3);
         btGrayScale = (Button)findViewById(R.id.bt4);
@@ -93,7 +94,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         btGrain = (Button)findViewById(R.id.bt9);
         btFillLight = (Button)findViewById(R.id.bt10);
         effectList.add(btBorder);
-        effectList.add(btBright);
+        //effectList.add(btBright);
         effectList.add(btContrast);
         effectList.add(btNegative);
         effectList.add(btGrayScale);
@@ -110,6 +111,11 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         for(Button x : effectList){
             x.setOnClickListener(new ButtonListener(this));
         }
+        btBright.setOnClickListener(new ButtonListener(this));
+        Bitmap t1 = BitmapFactory.decodeResource(getResources(), R.drawable.effect_btn_bright);
+        /*Bitmap scaled = Bitmap.createScaledBitmap(t1, 80, 80, true);
+        Bitmap.sc*/
+        btBright.setImageBitmap(t1);
         share.setOnClickListener(new ButtonListener(this));
     }
 
