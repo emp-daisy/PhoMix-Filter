@@ -9,7 +9,7 @@
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar"
+        android:theme="@style/CustomTheme"
         android:icon="@drawable/ic_launcher">
         <activity
             android:name=".SplashMain"
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Camera">
+        <activity android:name=".Camera" android:theme="@style/action">
 
             <intent-filter>
                 <action android:name="com.DualTech.Photo_Mix.CAMERA" />
@@ -53,6 +53,20 @@
 
             <intent-filter>
                 <action android:name="com.DualTech.Photo_Mix.CHOOSE_GRID" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AboutUs">
+
+            <intent-filter>
+                <action android:name="com.DualTech.Photo_Mix.ABOUT_US" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ReportBug">
+
+            <intent-filter>
+                <action android:name="com.DualTech.Photo_Mix.REPORT_BUG" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

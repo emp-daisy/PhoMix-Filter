@@ -4,17 +4,13 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <include layout="@layout/title"
-             android:id="@+id/include"/>
-
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.8"
         android:id="@+id/capture"
-        android:layout_above="@+id/cambt"
-        android:layout_below="@+id/include"/>
+        android:layout_above="@+id/cambt"/>
 
     <RelativeLayout
         android:id="@+id/cambt"

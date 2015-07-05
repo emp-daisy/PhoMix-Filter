@@ -3,8 +3,9 @@
     <style name="action" parent="CustomTheme">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#FFFFF5</item>
+        <item name="android:textColor">#ff816dff</item>
         <item name="android:typeface">monospace</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
     </style>
     <style name="act">
         <item name="android:layout_width">fill_parent</item>
@@ -13,8 +14,15 @@
         <item name="android:typeface">monospace</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="CustomWindowTitleBackground">
         <item name="android:background">#323331</item>
+    </style>
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">#ffedffe6</item>
+        <item name="android:textColor">#ff816dff</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="CustomTheme" parent="android:Theme">

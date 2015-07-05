@@ -13,6 +13,7 @@
         android:src="@drawable/ic_launcher"
         android:layout_width="100dp"
         android:layout_height="match_parent"
+        android:adjustViewBounds="true"
         android:scaleType="fitStart"/>
 
     <LinearLayout
@@ -40,7 +41,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
             android:contentDescription="Share"/>
+
+        <ImageButton
+            android:id="@+id/overflow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_menu_moreoverflow_normal_holo_light"/>
 
     </LinearLayout>
 

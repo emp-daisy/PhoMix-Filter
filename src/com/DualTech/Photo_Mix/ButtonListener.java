@@ -1,5 +1,7 @@
 package com.DualTech.Photo_Mix;
+
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 public class ButtonListener implements View.OnClickListener {
@@ -88,6 +90,14 @@ public class ButtonListener implements View.OnClickListener {
                 break;
             case R.id.bt0:
                 editor.getColor();
+                break;
+            case R.id.overflow:
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(v.getContext(), editor.overFlow);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.action_overflow, popup.getMenu());
+                popup.setOnMenuItemClickListener(new MenuItemListener(editor));
+                popup.show();
                 break;
         }
         editor.surfaceViewRenderer.initEffect();

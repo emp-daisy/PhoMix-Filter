@@ -11,12 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -30,7 +28,7 @@ import java.util.Locale;
 public class Grid extends Activity implements View.OnClickListener, SelectColor.OnColorChangedListener {
 
     Button SaveGrid, EditGrid, ColBorder;
-    ImageButton btShare;
+    ImageButton btShare, overFlow;
     static int currentImgID = 0;
     LinearLayout l1, l2, l3;
     Intent i;
@@ -95,10 +93,12 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
         EditGrid = (Button) findViewById(R.id.grideffect);
         ColBorder = (Button) findViewById(R.id.grid_col);
         btShare = (ImageButton) findViewById(R.id.share_icon);
+        overFlow = (ImageButton) findViewById(R.id.overflow);
         btShare.setOnClickListener(this);
         ColBorder.setOnClickListener(this);
         SaveGrid.setOnClickListener(this);
         EditGrid.setOnClickListener(this);
+        overFlow.setOnClickListener(this);
         l1 = (LinearLayout) findViewById(R.id.linny);
         l2 = (LinearLayout) findViewById(R.id.linny2);
         l3 = (LinearLayout) findViewById(R.id.linny3);
@@ -165,6 +165,7 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
         switch(v.getId()){
             case R.id.grid_col: //Border color
                 new SelectColor(this, Grid.this, Color.WHITE).show();
+                //new Select_Color(this, Grid.this, "Key", Color.WHITE, Color.BLACK).show();
                 break;
 
             case R.id.share_icon:
@@ -186,6 +187,15 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
                 {
                     e.printStackTrace();
                 }
+                break;
+
+            case R.id.overflow:
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(this, overFlow);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.action_overflow, popup.getMenu());
+                popup.setOnMenuItemClickListener(new MenuItemListener(this));
+                popup.show();
                 break;
 
             case R.id.btSave: //Saves the Image

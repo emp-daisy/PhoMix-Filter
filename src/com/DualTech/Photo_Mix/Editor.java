@@ -28,8 +28,8 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
 
     static ArrayList<Button> effectList;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
-    Button btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder;
-    ImageButton btBright;
+    Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder,btSave, btSelect;
+    ImageButton  overFlow, share;
     private static int RESULT_LOAD_IMAGE = 1;
     GLSurfaceView glView;
     SurfaceViewRenderer surfaceViewRenderer;
@@ -40,10 +40,8 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
     static Bitmap lastPicTaken;
     public static Bitmap inputBitmap;
     float vBright, vContrast, vSat, vGrain, vFillLight;
-    Button btSave, btSelect;
     SeekBar seekBar;
     TextView effectText;
-    ImageButton share;
     LinearLayout l1;
     static int call=0;
     static int picsTaken = 0;
@@ -77,13 +75,16 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
     public void initialize() {
         l1 = (LinearLayout) findViewById(R.id.linny);
         share = (ImageButton) findViewById(R.id.share_icon);
+        btSelect = (Button)findViewById(R.id.btSelect);
+        btSave = (Button)findViewById(R.id.btSave);
+        overFlow = (ImageButton) findViewById(R.id.overflow);
         seekBar = (SeekBar) findViewById(R.id.skBar);
         seekBar.setVisibility(View.INVISIBLE);
         seekBar.setOnSeekBarChangeListener(new SeekListener(this));
         effectList = new ArrayList<Button>();
         effectText = (TextView)findViewById(R.id.tvEffect);
         btBorder = (Button)findViewById(R.id.bt0);
-        btBright = (ImageButton)findViewById(R.id.bt1);
+        btBright = (Button)findViewById(R.id.bt1);
         btContrast = (Button)findViewById(R.id.bt2);
         btNegative = (Button)findViewById(R.id.bt3);
         btGrayScale = (Button)findViewById(R.id.bt4);
@@ -94,7 +95,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         btGrain = (Button)findViewById(R.id.bt9);
         btFillLight = (Button)findViewById(R.id.bt10);
         effectList.add(btBorder);
-        //effectList.add(btBright);
+        effectList.add(btBright);
         effectList.add(btContrast);
         effectList.add(btNegative);
         effectList.add(btGrayScale);
@@ -104,19 +105,13 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         effectList.add(btFlip);
         effectList.add(btGrain);
         effectList.add(btFillLight);
-        btSelect = (Button)findViewById(R.id.btSelect);
-        btSave = (Button)findViewById(R.id.btSave);
         btSelect.setOnClickListener(new ButtonListener(this));
         btSave.setOnClickListener(new ButtonListener(this));
+        share.setOnClickListener(new ButtonListener(this));
+        overFlow.setOnClickListener(new ButtonListener(this));
         for(Button x : effectList){
             x.setOnClickListener(new ButtonListener(this));
         }
-        btBright.setOnClickListener(new ButtonListener(this));
-        Bitmap t1 = BitmapFactory.decodeResource(getResources(), R.drawable.effect_btn_bright);
-        /*Bitmap scaled = Bitmap.createScaledBitmap(t1, 80, 80, true);
-        Bitmap.sc*/
-        btBright.setImageBitmap(t1);
-        share.setOnClickListener(new ButtonListener(this));
     }
 
     public void selectPicture(){

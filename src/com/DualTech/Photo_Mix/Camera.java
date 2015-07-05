@@ -9,10 +9,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.view.Window;
+import android.widget.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,7 +26,7 @@ import java.util.Locale;
 public class Camera extends Activity implements View.OnClickListener{
 
     Button btTakeAgain,btEdit, btSave;
-    ImageButton btShare;
+    ImageButton btShare, overFlow;
     Intent i;
     static Bitmap bmp,img_bitmap;
     ImageView iv;
@@ -40,7 +38,9 @@ public class Camera extends Activity implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.snap);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);
         initialize();
         takePicture();
 
@@ -58,10 +58,12 @@ public class Camera extends Activity implements View.OnClickListener{
         btSave = (Button) findViewById(R.id.btSave);
         btEdit = (Button) findViewById(R.id.edit);
         btShare = (ImageButton) findViewById(R.id.share_icon);
+        overFlow = (ImageButton) findViewById(R.id.overflow);
         btShare.setOnClickListener(this);
         btSave.setOnClickListener(this);
         btTakeAgain.setOnClickListener(this);
         btEdit.setOnClickListener(this);
+        overFlow.setOnClickListener(this);
     }
 
     @Override
@@ -81,6 +83,14 @@ public class Camera extends Activity implements View.OnClickListener{
                 iv.setDrawingCacheEnabled(true);
                 img_bitmap = iv.getDrawingCache();
                 share("image/*","My grid");
+                break;
+            case R.id.overflow:
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(this, overFlow);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.action_overflow, popup.getMenu());
+                popup.setOnMenuItemClickListener(new MenuItemListener(this));
+                popup.show();
                 break;
             case R.id.btSave:
                 String file_sub = new SimpleDateFormat("ddMyy_hhmmss", Locale.getDefault()).format(new Date());
