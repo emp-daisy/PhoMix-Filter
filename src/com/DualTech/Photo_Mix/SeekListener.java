@@ -17,27 +17,27 @@ public class SeekListener implements SeekBar.OnSeekBarChangeListener {
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         switch(Editor.currentEffect){
             case R.id.bt1:
-                editor.vBright = (float)progress / 6;
+                editor.vBright = (float)progress / 50;
                 editor.effectText.setText("Brightness: " + (editor.vBright * 100) + "%");
                 break;
             case R.id.bt2:
-                editor.vContrast = (float)progress / 10;
+                editor.vContrast = (float)progress / 20;
                 editor.effectText.setText("Contrast: " + (editor.vContrast * 100) + "%");
                 break;
             case R.id.bt6:
                 if(progress <= 5){
-                    editor.vSat = -(progress / 20);
+                    editor.vSat = -(progress / 40);
                 }else{
-                    editor.vSat = progress / 20;
+                    editor.vSat = progress / 40;
                 }
                 editor.effectText.setText("Saturation: " + (editor.vSat * 100) + "%");
                 break;
             case R.id.bt9:
-                editor.vGrain = (float)progress / 12;
+                editor.vGrain = (float)progress / 18;
                 editor.effectText.setText("Grain: " + (editor.vGrain * 100) + "%");
                 break;
             case R.id.bt10:
-                editor.vFillLight = (float)progress / 40;
+                editor.vFillLight = (float)progress / 60;
                 editor.effectText.setText("Fill-Light: " + (editor.vFillLight * 100) + "%");
                 break;
         }
