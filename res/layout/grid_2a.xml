@@ -2,18 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"              >
+                android:layout_height="match_parent"
+                >
+    <LinearLayout android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/linearLayout">
 
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:background="#33ff0A"
+        android:background="#ffffffff"
         android:weightSum="3"
-        android:layout_above="@+id/btinclude"
+        android:layout_above="@+id/linearLayout1"
         android:padding="5dp"
-        android:layout_alignParentTop="true"
-        android:id="@+id/linny">
+        android:id="@+id/linny"
+        android:layout_below="@+id/linearLayout">
 
 
         <ImageButton
@@ -36,7 +44,13 @@
             android:tag="imgButtons"/>
 
     </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:layout_above="@+id/btinclude"
+        android:id="@+id/linearLayout1">
 
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/btinclude"
         android:layout_width="match_parent"

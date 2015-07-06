@@ -49,6 +49,7 @@ public class ButtonListener implements View.OnClickListener {
                     editor.angle = 0;
                 else
                     editor.angle += 90;
+
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt5;

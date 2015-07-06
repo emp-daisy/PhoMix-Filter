@@ -6,6 +6,7 @@ import android.media.effect.EffectFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.opengl.Matrix;
 
 import java.nio.IntBuffer;
 
@@ -106,7 +107,6 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_GRAYSCALE);
                 break;
             case R.id.bt5:
-
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_ROTATE);
                 mEffect.setParameter("angle", editor.angle);
                 break;
@@ -119,7 +119,7 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
                 break;
             case R.id.bt8:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FLIP);
-                mEffect.setParameter("vertical", true);
+                mEffect.setParameter("horizontal", true);
                 break;
             case R.id.bt9:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_GRAIN);
