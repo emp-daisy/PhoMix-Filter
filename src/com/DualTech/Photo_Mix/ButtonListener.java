@@ -45,14 +45,15 @@ public class ButtonListener implements View.OnClickListener {
                 Editor.currentEffect = R.id.bt4;
                 break;
             case R.id.bt5:
-                if(editor.angle == 360)
+                /*if(editor.angle == 360)
                     editor.angle = 0;
                 else
-                    editor.angle += 90;
+                    editor.angle += 90;*/
 
-                Editor.effectOn = true;
+                Editor.effectOn = false;
                 editor.seekBar.setVisibility(View.INVISIBLE);
-                Editor.currentEffect = R.id.bt5;
+                Editor.currentEffect = 0;
+                SurfaceViewRenderer.rotateOn = true;
                 break;
             case R.id.bt6:
                 Editor.effectOn = true;

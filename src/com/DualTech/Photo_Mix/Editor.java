@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -137,6 +138,12 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
             inputBitmap = BitmapFactory.decodeFile(picturePath);
             changeImage = true;
         }
+    }
+
+    public Bitmap rotate(Bitmap bmp){
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
     }
 
     public void saveBitmap(Bitmap bitmap) {

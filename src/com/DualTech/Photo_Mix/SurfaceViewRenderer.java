@@ -25,8 +25,10 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
     public boolean saveFrame;
     public boolean mInitialized = false;
     static public boolean sendImage;
+    static public boolean rotateOn;
 
     public SurfaceViewRenderer(Editor editor, GLSurfaceView glView){
+        rotateOn = false;
         this.editor = editor;
         this.glView = glView;
         glView.setEGLContextClientVersion(2);
@@ -184,6 +186,12 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
             Editor.lastPicTaken = takeScreenshot(gl);
             editor.share("image/*", "cHIcken");
             sendImage = false;
+        }
+
+        if(rotateOn){
+            Editor.inputBitmap = editor.rotate(takeScreenshot(gl));
+            rotateOn = false;
+            loadTextures();
         }
     }
 }
