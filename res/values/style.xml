@@ -22,7 +22,7 @@
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">#ffedffe6</item>
         <item name="android:textColor">#ff816dff</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="CustomTheme" parent="android:Theme">

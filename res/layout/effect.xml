@@ -23,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:text="Border"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt0"
                 />
@@ -31,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="Brightness"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt1"
                  />
@@ -39,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="Contrast"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt2"
                 />
@@ -47,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="Negative"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt3"
                 />
@@ -55,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="GrayScale"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt4"
                 />
@@ -63,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rotate"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt5"
                 />
@@ -71,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:text="Saturation"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt6"
                 />
@@ -79,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sepia"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt7"
                 />
@@ -87,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:text="Flip"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt8"
                 />
@@ -95,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:text="Grain"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt9"
                 />
@@ -103,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="Fill-Light"
                 android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
                 android:tag="effects"
                 android:id="@+id/bt10"
                 />

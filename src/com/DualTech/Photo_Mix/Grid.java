@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Grid extends Activity implements View.OnClickListener, SelectColor.OnColorChangedListener {
+public class Grid extends Activity implements View.OnClickListener, Select_Color.OnColorChangedListener {
 
     Button SaveGrid, EditGrid, ColBorder;
     ImageButton btShare, overFlow;
@@ -164,8 +164,8 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
 
         switch(v.getId()){
             case R.id.grid_col: //Border color
-                new SelectColor(this, Grid.this, Color.WHITE).show();
-                //new Select_Color(this, Grid.this, "Key", Color.WHITE, Color.BLACK).show();
+                //new SelectColor(this, Grid.this, Color.WHITE).show();
+                new Select_Color(this, Grid.this, "Key", Color.WHITE, Color.BLACK).show();
                 break;
 
             case R.id.share_icon:
@@ -267,9 +267,14 @@ public class Grid extends Activity implements View.OnClickListener, SelectColor.
         }
     }
 
-    @Override
+    /*@Override
     public void colorChanged(int color) {
         Grid.this.findViewById(R.id.linny).setBackgroundColor(color);
-    }
+    }*/
 
+    @Override
+    public void colorChanged(String key, int color) {
+        Grid.this.findViewById(R.id.linny).setBackgroundColor(color);
+
+    }
 }
