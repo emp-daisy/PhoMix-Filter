@@ -6,7 +6,6 @@ import android.media.effect.EffectFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
-import android.opengl.Matrix;
 
 import java.nio.IntBuffer;
 
@@ -24,11 +23,12 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
     int textureWidth, textureHeight;
     public boolean saveFrame;
     public boolean mInitialized = false;
+    public static boolean effectBool;
     static public boolean sendImage;
     static public boolean rotateOn;
 
     public SurfaceViewRenderer(Editor editor, GLSurfaceView glView){
-        rotateOn = false;
+        rotateOn = effectBool = false;
         this.editor = editor;
         this.glView = glView;
         glView.setEGLContextClientVersion(2);
@@ -70,8 +70,8 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
     }
 
     public Bitmap takeScreenshot(GL10 mGL) {
-        final int width = editor.l1.getWidth();
-        final int height = editor.l1.getHeight();
+        final int width = glView.getWidth();
+        final int height = glView.getHeight();
         IntBuffer ib = IntBuffer.allocate(width * height);
         IntBuffer ibt = IntBuffer.allocate(width * height);
 
@@ -109,8 +109,8 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_GRAYSCALE);
                 break;
             case R.id.bt5:
-                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_ROTATE);
-                mEffect.setParameter("angle", editor.angle);
+                /*mEffect = effectFactory.createEffect(EffectFactory.EFFECT_ROTATE);
+                mEffect.setParameter("angle", editor.angle);*/
                 break;
             case R.id.bt6:
                 mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SATURATE);
@@ -169,6 +169,12 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
         //Apply Effect if used
         if (Editor.currentEffect != 0) {
             //if an effect is chosen initialize it and apply it to the texture
+            if(effectBool){
+                effectBool = false;
+                Editor.inputBitmap = takeScreenshot(gl);
+                Editor.picsTaken = 0;
+                loadTextures();
+            }
             initEffect();
             applyEffect();
         }
@@ -190,7 +196,9 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
 
         if(rotateOn){
             Editor.inputBitmap = editor.rotate(takeScreenshot(gl));
+            Editor.picsTaken = 0;
             rotateOn = false;
+            //TextureRenderer.clearScreen();
             loadTextures();
         }
     }

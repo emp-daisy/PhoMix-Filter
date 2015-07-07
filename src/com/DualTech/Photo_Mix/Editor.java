@@ -55,6 +55,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.effect);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.header);
+        TextureRenderer.clearScreen();
         angle = 0;
         if(call == 0)
             inputBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.click_select);
@@ -113,6 +114,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         for(Button x : effectList){
             x.setOnClickListener(new ButtonListener(this));
         }
+
     }
 
     public void selectPicture(){
@@ -143,7 +145,9 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
     public Bitmap rotate(Bitmap bmp){
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
-        return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+        Bitmap b1 = Bitmap.createBitmap(bmp, 0 , 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+        Bitmap image = Bitmap.createScaledBitmap(b1, glView.getWidth(), glView.getHeight(), true);
+        return image;
     }
 
     public void saveBitmap(Bitmap bitmap) {

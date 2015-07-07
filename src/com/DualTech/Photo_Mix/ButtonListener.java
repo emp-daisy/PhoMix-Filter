@@ -26,56 +26,61 @@ public class ButtonListener implements View.OnClickListener {
                 break;*/
             case R.id.bt1:
                 Editor.effectOn = true;
+                SurfaceViewRenderer.effectBool = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt1;
                 break;
             case R.id.bt2:
+                SurfaceViewRenderer.effectBool = true;
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt2;
                 break;
             case R.id.bt3:
+                SurfaceViewRenderer.effectBool = true;
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt3;
                 break;
             case R.id.bt4:
+                SurfaceViewRenderer.effectBool = true;
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt4;
                 break;
             case R.id.bt5:
-                /*if(editor.angle == 360)
-                    editor.angle = 0;
-                else
-                    editor.angle += 90;*/
-
-                Editor.effectOn = false;
+                SurfaceViewRenderer.effectBool = true;
+                Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
-                Editor.currentEffect = 0;
+                Editor.currentEffect = R.id.bt5;
                 SurfaceViewRenderer.rotateOn = true;
                 break;
             case R.id.bt6:
+                SurfaceViewRenderer.effectBool = true;
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt6;
                 break;
             case R.id.bt7:
+                SurfaceViewRenderer.effectBool = true;
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt7;
                 break;
             case R.id.bt8:
+                SurfaceViewRenderer.effectBool = true;
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.INVISIBLE);
                 Editor.currentEffect = R.id.bt8;
                 break;
             case R.id.bt9:
+                SurfaceViewRenderer.effectBool = true;
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt9;
                 break;
             case R.id.bt10:
+                SurfaceViewRenderer.effectBool = true;
                 Editor.effectOn = true;
                 editor.seekBar.setVisibility(View.VISIBLE);
                 Editor.currentEffect = R.id.bt10;
