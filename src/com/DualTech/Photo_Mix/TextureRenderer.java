@@ -122,6 +122,11 @@ public class TextureRenderer {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
     }
 
+    public static void clearScreen(){
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        //GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+    }
+
     private void computeOutputVertices() {
         if (mPosVertices != null) {
             float imgAspectRatio = mTexWidth / (float)mTexHeight;
