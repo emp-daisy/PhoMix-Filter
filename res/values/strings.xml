@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Photo Mix +</string>
+    <color name="text_col">#ff816dff</color>
+    <color name="back_col">#ffedffe6</color>
 </resources>

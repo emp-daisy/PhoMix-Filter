@@ -27,12 +27,13 @@ import java.util.Locale;
 
 public class Grid extends Activity implements View.OnClickListener, Select_Color.OnColorChangedListener {
 
-    Button SaveGrid, EditGrid, ColBorder;
+    Button SaveGrid, EditGrid, ColBorder, btChgBorder;
     ImageButton btShare, overFlow;
     static int currentImgID = 0, R_Img = 0;
     LinearLayout l1, l2, l3;
     Intent i;
     static ArrayList<ImageButton> imgbuttons;
+    static ArrayList<LinearLayout> linear;
     private static int RESULT_LOAD_IMAGE = 1;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
     File file;
@@ -92,10 +93,12 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
         SaveGrid = (Button) findViewById(R.id.btSave);
         EditGrid = (Button) findViewById(R.id.grideffect);
         ColBorder = (Button) findViewById(R.id.grid_col);
+        btChgBorder = (Button) findViewById(R.id.no_border);
         btShare = (ImageButton) findViewById(R.id.share_icon);
         overFlow = (ImageButton) findViewById(R.id.overflow);
         btShare.setOnClickListener(this);
         ColBorder.setOnClickListener(this);
+        btChgBorder.setOnClickListener(this);
         SaveGrid.setOnClickListener(this);
         EditGrid.setOnClickListener(this);
         overFlow.setOnClickListener(this);
@@ -103,17 +106,20 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
         l2 = (LinearLayout) findViewById(R.id.linny2);
         l3 = (LinearLayout) findViewById(R.id.linny3);
         imgbuttons = new ArrayList<ImageButton>();
+        linear = new ArrayList<LinearLayout>();
         if(l1 != null)
             initiliazeImg(l1);
+            linear.add(l1);
         if(l2 != null)
             initiliazeImg(l2);
+            linear.add(l2);
         if(l3 != null)
             initiliazeImg(l3);
+            linear.add(l3);
         for(ImageButton x: imgbuttons){
             x.setImageResource(R.drawable.tap_select);
             x.setOnClickListener(this);
             registerForContextMenu(x);
-            //x.setOnLongClickListener(this);
         }
     }
 
@@ -168,6 +174,35 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
             case R.id.grid_col: //Border color
                 //new SelectColor(this, Grid.this, Color.WHITE).show();
                 new Select_Color(this, Grid.this, "Key", Color.WHITE, Color.BLACK).show();
+                break;
+
+            case R.id.no_border:
+                ViewGroup.MarginLayoutParams params;
+                final float scale = this.getResources().getDisplayMetrics().density;
+                // convert the DP into pixel
+                int pixel =  (int)(5 * scale + 0.5f);
+                if(btChgBorder.getText() == "Border On"){
+                    /*for(LinearLayout x:linear){
+                        params = (ViewGroup.MarginLayoutParams) x.getLayoutParams();
+                        x.setPadding(pixel,pixel,pixel,pixel);
+                        x.setLayoutParams(params);
+                        x.requestLayout();}*/
+                    l1.setPadding(pixel,pixel,pixel,pixel);
+                    for(ImageButton x:imgbuttons){
+                        params = (ViewGroup.MarginLayoutParams) x.getLayoutParams();
+                        params.setMargins(pixel,pixel,pixel,pixel);
+                        x.setLayoutParams(params);
+                        x.requestLayout();}
+                    btChgBorder.setText("Border Off");
+                }else{
+                    l1.setPadding(0,0,0,0);
+                    for(ImageButton x:imgbuttons){
+                        params = (ViewGroup.MarginLayoutParams) x.getLayoutParams();
+                        params.setMargins(0, 0, 0, 0);
+                        x.setLayoutParams(params);
+                        x.requestLayout();}
+                    btChgBorder.setText("Border On");
+                }
                 break;
 
             case R.id.share_icon:
@@ -301,6 +336,7 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), width, height, true);
             myPhotoImage.setImageBitmap(scaledBitmap);
 
+            Toast.makeText(this, "Long Press the photo to rotate", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -1,7 +1,10 @@
 package com.DualTech.Photo_Mix;
 
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class ButtonListener implements View.OnClickListener {
@@ -19,11 +22,25 @@ public class ButtonListener implements View.OnClickListener {
         editor.effectText.setText("");
         Editor.picsTaken = 0;
         switch (v.getId()){
-           /* case R.id.bt0:
-                LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = layoutInflater.inflate(R.layout.color_pop, null);
-                final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                break;*/
+            case R.id.bt00:
+                final float scale = editor.getResources().getDisplayMetrics().density;
+                // convert the DP into pixel
+                int pixel =  (int)(15 * scale + 0.5f);
+
+                if(editor.btChgBorder.getText() == "Border On"){
+                    editor.l1.setPadding(pixel,pixel,pixel,pixel);
+                    editor.l1.requestLayout();
+                    editor.btChgBorder.setText("Border Off");
+                }
+                else /*if(editor.btChgBorder.getText() == "Border Off")*/{
+                    editor.l1.setPadding(0, 0, 0, 0);
+                    editor.l1.requestLayout();
+                    editor.btChgBorder.setText("Border On");
+                }
+                break;
+            case R.id.bt0:
+                editor.getColor();
+                break;
             case R.id.bt1:
                 Editor.effectOn = true;
                 SurfaceViewRenderer.effectBool = true;
@@ -94,9 +111,6 @@ public class ButtonListener implements View.OnClickListener {
                 break;
             case R.id.share_icon:
                 SurfaceViewRenderer.sendImage = true;
-                break;
-            case R.id.bt0:
-                editor.getColor();
                 break;
             case R.id.overflow:
                 //Creating the instance of PopupMenu

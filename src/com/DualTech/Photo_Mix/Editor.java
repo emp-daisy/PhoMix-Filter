@@ -29,7 +29,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
 
     static ArrayList<Button> effectList;
     final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
-    Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder,btSave, btSelect;
+    Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder,btChgBorder,btSave, btSelect;
     ImageButton  overFlow, share;
     private static int RESULT_LOAD_IMAGE = 1;
     GLSurfaceView glView;
@@ -85,6 +85,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         seekBar.setOnSeekBarChangeListener(new SeekListener(this));
         effectList = new ArrayList<Button>();
         effectText = (TextView)findViewById(R.id.tvEffect);
+        btChgBorder = (Button) findViewById(R.id.bt00);
         btBorder = (Button)findViewById(R.id.bt0);
         btBright = (Button)findViewById(R.id.bt1);
         btContrast = (Button)findViewById(R.id.bt2);
@@ -96,6 +97,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
         btFlip = (Button)findViewById(R.id.bt8);
         btGrain = (Button)findViewById(R.id.bt9);
         btFillLight = (Button)findViewById(R.id.bt10);
+        effectList.add(btChgBorder);
         effectList.add(btBorder);
         effectList.add(btBright);
         effectList.add(btContrast);

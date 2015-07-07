@@ -12,7 +12,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
-        android:textColor="#0000ff"
         android:id="@+id/tvTitle" />
 
     <ScrollView

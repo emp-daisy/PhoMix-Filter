@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="action" parent="CustomTheme">
+        <item name="android:windowBackground">@drawable/background</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#ff816dff</item>
         <item name="android:typeface">monospace</item>
-        <item name="android:listViewStyle">@style/listView</item>
+        <item name="android:textColor">@color/text_col</item>
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:itemBackground">@color/back_col</item>
+        <item name="android:listSelector">#00ff00</item>
         <item name="android:dropDownListViewStyle">@style/listView</item>
+        <item name="android:listPopupWindowStyle">@style/listView</item>
+        <item name="android:listViewStyle">@style/listView</item>
     </style>
 
     <style name="CustomWindowTitleBackground">
         <item name="android:background">#323331</item>
     </style>
 
-    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
-        <item name="android:popupBackground">#ffedffe6</item>
-        <item name="android:textColor">#ff816dff</item>
-        <item name="android:textSize">10sp</item>
-    </style>
-
     <style name="CustomTheme" parent="android:Theme">
         <item name="android:windowTitleSize">60dp</item>
         <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>
     </style>
-    <style name="listView" parent="@android:style/Widget.ListView">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">#ff816dff</item>
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/back_col</item>
         <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="listView" parent="@android:style/Widget.ListView">
+        <item name="android:background">#ff0000</item>
+        <item name="android:listSelector">#00ff00</item>
+        <item name="android:textSize">30sp</item>
     </style>
 </resources>

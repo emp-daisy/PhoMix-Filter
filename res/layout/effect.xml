@@ -21,6 +21,15 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Border Off"
+                android:background="@drawable/bt_effect"
+                android:layout_marginRight="5dp"
+                android:tag="effects"
+                android:id="@+id/bt00"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Border"
                 android:background="@drawable/bt_effect"
                 android:layout_marginRight="5dp"
@@ -126,12 +135,12 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/btSave"
         android:layout_above="@+id/skBar"
+        android:padding="15dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true">
         <android.opengl.GLSurfaceView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
             android:id="@+id/effectsView"
             android:background="@android:color/transparent"/>
     </LinearLayout>

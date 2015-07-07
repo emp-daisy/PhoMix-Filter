@@ -18,6 +18,15 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Border Off"
+            android:id="@+id/no_border"
+            android:background="@drawable/bt_ch_grid"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Effect"
             android:id="@+id/grideffect"
             android:background="@drawable/bt_ch_grid"
