@@ -5,14 +5,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ff816dff</item>
         <item name="android:typeface">monospace</item>
+        <item name="android:listViewStyle">@style/listView</item>
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
-    </style>
-    <style name="act">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#FFFFF5</item>
-        <item name="android:typeface">monospace</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="android:dropDownListViewStyle">@style/listView</item>
     </style>
 
     <style name="CustomWindowTitleBackground">
@@ -26,7 +21,12 @@
     </style>
 
     <style name="CustomTheme" parent="android:Theme">
-        <item name="android:windowTitleSize">40dp</item>
+        <item name="android:windowTitleSize">60dp</item>
         <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>
+    </style>
+    <style name="listView" parent="@android:style/Widget.ListView">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">#ff816dff</item>
+        <item name="android:textSize">10sp</item>
     </style>
 </resources>

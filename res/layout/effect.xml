@@ -119,6 +119,7 @@
                 />
             </LinearLayout>
         </HorizontalScrollView>
+
     <LinearLayout
         android:id="@+id/linny"
         android:layout_width="match_parent"
@@ -134,7 +135,6 @@
             android:id="@+id/effectsView"
             android:background="@android:color/transparent"/>
     </LinearLayout>
-
 
 
     <SeekBar
