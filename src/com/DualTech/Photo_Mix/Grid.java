@@ -7,13 +7,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
+import android.view.*;
 import android.widget.*;
 
 import java.io.ByteArrayOutputStream;
@@ -29,7 +29,7 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
 
     Button SaveGrid, EditGrid, ColBorder;
     ImageButton btShare, overFlow;
-    static int currentImgID = 0;
+    static int currentImgID = 0, R_Img = 0;
     LinearLayout l1, l2, l3;
     Intent i;
     static ArrayList<ImageButton> imgbuttons;
@@ -112,6 +112,8 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
         for(ImageButton x: imgbuttons){
             x.setImageResource(R.drawable.tap_select);
             x.setOnClickListener(this);
+            registerForContextMenu(x);
+            //x.setOnLongClickListener(this);
         }
     }
 
@@ -245,6 +247,41 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Rotate Menu");
+        MenuInflater inflater = getMenuInflater();
+        R_Img = v.getId();
+        inflater.inflate(R.menu.rotate_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.rotate90:
+                rotateButton(90);
+                return true;
+            case R.id.rotate180:
+                rotateButton(180);
+                return true;
+            case R.id.rotate270:
+                rotateButton(270);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public void rotateButton(int angle){
+        ImageButton img = (ImageButton) findViewById(R_Img);
+        Bitmap foto = ((BitmapDrawable)img.getDrawable()).getBitmap();
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        Bitmap rotatedIMG =  Bitmap.createBitmap(foto, 0, 0, foto.getWidth(), foto.getHeight(), matrix, true);
+        img.setImageBitmap(rotatedIMG);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Code to use selected image
@@ -277,4 +314,6 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
         Grid.this.findViewById(R.id.linny).setBackgroundColor(color);
 
     }
+
+
 }

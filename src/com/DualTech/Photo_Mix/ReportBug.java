@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.view.Window;
+import android.widget.*;
 
 /**
  * Created by Jesz on 05-Jul-15.
@@ -17,16 +16,21 @@ public class ReportBug extends Activity implements View.OnClickListener {
     Button sendEmail;
     EditText personsName, report;
     String rName, message;
+    ImageButton overFlow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.report_bug);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.bar_title);
 
         report = (EditText) findViewById(R.id.etAction);
         personsName = (EditText) findViewById(R.id.etName);
         sendEmail = (Button) findViewById(R.id.bSentEmail);
+        overFlow = (ImageButton) findViewById(R.id.overflow);
         sendEmail.setOnClickListener(this);
+        overFlow.setOnClickListener(this);
 
         message = report.getText().toString();
         rName = personsName.getText().toString();
@@ -51,6 +55,14 @@ public class ReportBug extends Activity implements View.OnClickListener {
                 } catch (ActivityNotFoundException ex) {
                     Toast.makeText(getApplicationContext(), "No email client installed.", Toast.LENGTH_LONG).show();
                 }
+                break;
+            case R.id.overflow:
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(this, overFlow);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.action_overflow, popup.getMenu());
+                popup.setOnMenuItemClickListener(new MenuItemListener(this));
+                popup.show();
                 break;
         }
     }

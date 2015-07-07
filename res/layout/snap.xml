@@ -10,7 +10,8 @@
         android:layout_height="0dp"
         android:layout_weight="0.8"
         android:id="@+id/capture"
-        android:layout_above="@+id/cambt"/>
+        android:layout_above="@+id/cambt"
+        android:layout_alignParentTop="true"/>
 
     <RelativeLayout
         android:id="@+id/cambt"

@@ -17,6 +17,7 @@ public class MenuItemListener implements PopupMenu.OnMenuItemClickListener {
     MenuItemListener(Context c){
         context = c;
     }
+
     public boolean onMenuItemClick(MenuItem item) {
         switch(item.getItemId()){
             case R.id.report:

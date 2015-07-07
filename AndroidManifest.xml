@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MyActivity">
+        <activity android:name=".MyActivity" android:theme="@style/action">
 
             <intent-filter>
                 <action android:name="com.DualTech.Photo_Mix.MAIN_ACTIVITY" />
@@ -49,21 +49,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChooseGrid">
+        <activity android:name=".ChooseGrid" android:theme="@style/action">
 
             <intent-filter>
                 <action android:name="com.DualTech.Photo_Mix.CHOOSE_GRID" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutUs">
+        <activity android:name=".AboutUs" android:theme="@style/action">
 
             <intent-filter>
                 <action android:name="com.DualTech.Photo_Mix.ABOUT_US" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReportBug">
+        <activity android:name=".ReportBug" android:theme="@style/action">
 
             <intent-filter>
                 <action android:name="com.DualTech.Photo_Mix.REPORT_BUG" />

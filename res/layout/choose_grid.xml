@@ -10,151 +10,159 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Choose Your Grid"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
         android:textColor="#0000ff"
         android:id="@+id/tvTitle" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginTop="20dp"
-            android:text="Layout with 2 Pictures"
-            android:id="@+id/tvSubMenu1" />
-        <GridLayout
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:columnCount="3"
-            android:rowCount="1"
-            android:id="@+id/gL2"
-            android:tag="griddy">
-            <Button
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grid 2A"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid2a"
-                />
-            <Button
-                android:layout_width="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="20dp"
+                android:text="Layout with 2 Pictures"
+                android:id="@+id/tvSubMenu1" />
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Grid 2B"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid2b"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Grid 2C"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid2c"
-                />
+                android:layout_gravity="center_horizontal"
+                android:columnCount="3"
+                android:rowCount="1"
+                android:id="@+id/gL2"
+                android:tag="griddy">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 2A"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid2a"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 2B"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid2b"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 2C"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid2c"
+                    />
 
-        </GridLayout>
+            </GridLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Layout with 3 Pictures"
-            android:layout_marginTop="20dp"
-            android:id="@+id/tvSubMenu3" />
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:columnCount="3"
-            android:rowCount="1"
-            android:id="@+id/gL3"
-            android:tag="griddy">
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grid 3A"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid3a"
-                />
-            <Button
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Layout with 3 Pictures"
+                android:layout_marginTop="20dp"
+                android:id="@+id/tvSubMenu3" />
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:columnCount="3"
+                android:rowCount="1"
+                android:id="@+id/gL3"
+                android:tag="griddy">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 3A"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid3a"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 3B"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid3b"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 3C"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid3c"
+                    />
+
+            </GridLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grid 3B"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid3b"
-                />
-            <Button
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Layout with 4 Pictures"
+                android:layout_marginTop="20dp"
+                android:id="@+id/tvSubMenu4" />
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:columnCount="3"
+                android:rowCount="1"
+                android:id="@+id/gL4"
+                android:tag="griddy">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 4A"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid4a"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 4B"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid4b"
+                    />
+
+            </GridLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grid 3C"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid3c"
-                />
-
-        </GridLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Layout with 4 Pictures"
-            android:layout_marginTop="20dp"
-            android:id="@+id/tvSubMenu4" />
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:columnCount="3"
-            android:rowCount="1"
-            android:id="@+id/gL4"
-            android:tag="griddy">
-            <Button
-                android:layout_width="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Layout with 5 Pictures"
+                android:layout_marginTop="20dp"
+                android:id="@+id/tvSubMenu5" />
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Grid 4A"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid4a"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Grid 4B"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid4b"
-                />
+                android:layout_gravity="center_horizontal"
+                android:columnCount="3"
+                android:rowCount="1"
+                android:id="@+id/gL5"
+                android:tag="griddy">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grid 5A"
+                    android:background="@drawable/bt_ch_grid"
+                    android:id="@+id/btGrid5a"
+                    />
+            </GridLayout>
 
-        </GridLayout>
+        </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Layout with 5 Pictures"
-            android:layout_marginTop="20dp"
-            android:id="@+id/tvSubMenu5" />
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:columnCount="3"
-            android:rowCount="1"
-            android:id="@+id/gL5"
-            android:tag="griddy">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Grid 5A"
-                android:background="@drawable/bt_ch_grid"
-                android:id="@+id/btGrid5a"
-                />
-        </GridLayout>
 
-    </LinearLayout>
 
 
 </LinearLayout>
