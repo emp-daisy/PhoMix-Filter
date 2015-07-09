@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 import android.widget.SeekBar;
 

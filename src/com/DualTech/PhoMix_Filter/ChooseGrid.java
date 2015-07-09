@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -105,7 +105,7 @@ public class ChooseGrid extends Activity implements View.OnClickListener{
         }
         if(v.getId() != R.id.overflow){
             //star grid activity
-            i = new Intent("com.DualTech.Photo_Mix.GRID");
+            i = new Intent("com.DualTech.PhoMix_Filter.GRID");
             startActivity(i);
         }
         else{

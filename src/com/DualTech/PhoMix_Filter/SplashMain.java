@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 /**
  * Created by Jesz on 09-Jun-15.
@@ -21,7 +21,7 @@ public class SplashMain extends Activity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally {
-                    Intent openMain = new Intent("com.DualTech.Photo_Mix.MAIN_ACTIVITY");
+                    Intent openMain = new Intent("com.DualTech.PhoMix_Filter.MAIN_ACTIVITY");
                     startActivity(openMain);
                 }
             }

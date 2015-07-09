@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 import android.graphics.Bitmap;
 import android.media.effect.Effect;
 import android.media.effect.EffectContext;

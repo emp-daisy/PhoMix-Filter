@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -216,7 +216,7 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
                 {
                     l1.setDrawingCacheEnabled(true);
                     img_bitmap = l1.getDrawingCache();
-                    i = new Intent("com.DualTech.Photo_Mix.EDITOR");
+                    i = new Intent("com.DualTech.PhoMix_Filter.EDITOR");
                     Editor.call = 1;
                     startActivity(i);
                 }

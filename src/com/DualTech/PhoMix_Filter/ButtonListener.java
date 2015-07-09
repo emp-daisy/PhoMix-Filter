@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 import android.view.View;
 import android.widget.PopupMenu;

@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -75,7 +75,7 @@ public class Camera extends Activity implements View.OnClickListener{
             case R.id.edit:
                 iv.setDrawingCacheEnabled(true);
                 img_bitmap = iv.getDrawingCache();
-                i = new Intent("com.DualTech.Photo_Mix.EDITOR");
+                i = new Intent("com.DualTech.PhoMix_Filter.EDITOR");
                 Editor.call = 2;
                 startActivity(i);
                 break;

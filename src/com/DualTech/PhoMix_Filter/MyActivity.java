@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -39,16 +39,16 @@ public class MyActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.cam:
-                i = new Intent("com.DualTech.Photo_Mix.CAMERA");
+                i = new Intent("com.DualTech.PhoMix_Filter.CAMERA");
                 startActivity(i);
                 break;
             case R.id.effect:
-                i = new Intent("com.DualTech.Photo_Mix.EDITOR");
+                i = new Intent("com.DualTech.PhoMix_Filter.EDITOR");
                 Editor.call=0;
                 startActivity(i);
                 break;
             case R.id.grid:
-                i = new Intent("com.DualTech.Photo_Mix.CHOOSE_GRID");
+                i = new Intent("com.DualTech.PhoMix_Filter.CHOOSE_GRID");
                 startActivity(i);
                 break;
             case R.id.overflow:

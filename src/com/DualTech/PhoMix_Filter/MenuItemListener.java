@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,11 +21,11 @@ public class MenuItemListener implements PopupMenu.OnMenuItemClickListener {
     public boolean onMenuItemClick(MenuItem item) {
         switch(item.getItemId()){
             case R.id.report:
-                i = new Intent("com.DualTech.Photo_Mix.REPORT_BUG");
+                i = new Intent("com.DualTech.PhoMix_Filter.REPORT_BUG");
                 context.startActivity(i);
                 return true;
             case R.id.about:
-                i = new Intent("com.DualTech.Photo_Mix.ABOUT_US");
+                i = new Intent("com.DualTech.PhoMix_Filter.ABOUT_US");
                 context.startActivity(i);
                 return true;
             case R.id.gift:

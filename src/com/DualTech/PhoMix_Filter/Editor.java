@@ -1,4 +1,4 @@
-package com.DualTech.Photo_Mix;
+package com.DualTech.PhoMix_Filter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -122,7 +122,7 @@ public class Editor extends Activity implements SelectColor.OnColorChangedListen
     public void selectPicture(){
         i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
-        i = new Intent("com.DualTech.Photo_Mix.EDITOR");
+        i = new Intent("com.DualTech.PhoMix_Filter.EDITOR");
     }
 
     @Override

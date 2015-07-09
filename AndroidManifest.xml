@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.DualTech.Photo_Mix">
+    package="com.DualTech.PhoMix_Filter">
     <uses-sdk android:minSdkVersion="14"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -13,6 +13,7 @@
         android:icon="@drawable/ic_launcher">
         <activity
             android:name=".SplashMain"
+            android:theme="@style/action"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +24,7 @@
         <activity android:name=".MyActivity" android:theme="@style/action">
 
             <intent-filter>
-                <action android:name="com.DualTech.Photo_Mix.MAIN_ACTIVITY" />
+                <action android:name="com.DualTech.PhoMix_Filter.MAIN_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -31,42 +32,42 @@
         <activity android:name=".Camera" android:theme="@style/action">
 
             <intent-filter>
-                <action android:name="com.DualTech.Photo_Mix.CAMERA" />
+                <action android:name="com.DualTech.PhoMix_Filter.CAMERA" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".Grid" android:theme="@style/action">
 
             <intent-filter>
-                <action android:name="com.DualTech.Photo_Mix.GRID" />
+                <action android:name="com.DualTech.PhoMix_Filter.GRID" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".Editor" android:theme="@style/action">
 
             <intent-filter>
-                <action android:name="com.DualTech.Photo_Mix.EDITOR" />
+                <action android:name="com.DualTech.PhoMix_Filter.EDITOR" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".ChooseGrid" android:theme="@style/action">
 
             <intent-filter>
-                <action android:name="com.DualTech.Photo_Mix.CHOOSE_GRID" />
+                <action android:name="com.DualTech.PhoMix_Filter.CHOOSE_GRID" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".AboutUs" android:theme="@style/action">
 
             <intent-filter>
-                <action android:name="com.DualTech.Photo_Mix.ABOUT_US" />
+                <action android:name="com.DualTech.PhoMix_Filter.ABOUT_US" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".ReportBug" android:theme="@style/action">
 
             <intent-filter>
-                <action android:name="com.DualTech.Photo_Mix.REPORT_BUG" />
+                <action android:name="com.DualTech.PhoMix_Filter.REPORT_BUG" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
