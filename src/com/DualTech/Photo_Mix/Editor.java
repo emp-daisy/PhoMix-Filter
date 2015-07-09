@@ -28,7 +28,7 @@ import java.util.Locale;
 public class Editor extends Activity implements SelectColor.OnColorChangedListener{
 
     static ArrayList<Button> effectList;
-    final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
+    final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/PhoMix Filter/");
     Button btBright,btContrast,btNegative,btGrayScale,btRotate,btSaturation,btSepia, btFlip, btGrain, btFillLight,btBorder,btChgBorder,btSave, btSelect;
     ImageButton  overFlow, share;
     private static int RESULT_LOAD_IMAGE = 1;

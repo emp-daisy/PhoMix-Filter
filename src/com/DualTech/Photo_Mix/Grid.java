@@ -35,7 +35,7 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
     static ArrayList<ImageButton> imgbuttons;
     static ArrayList<LinearLayout> linear;
     private static int RESULT_LOAD_IMAGE = 1;
-    final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
+    final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/PhoMix Filter/");
     File file;
     static Bitmap img_bitmap;
     FileOutputStream ostream;
@@ -314,7 +314,9 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
         matrix.postRotate(angle);
         Bitmap rotatedIMG =  Bitmap.createBitmap(foto, 0, 0, foto.getWidth(), foto.getHeight(), matrix, true);
         img.setImageBitmap(rotatedIMG);
-    }
+        img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+        }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -336,7 +338,7 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath), width, height, true);
             myPhotoImage.setImageBitmap(scaledBitmap);
 
-            Toast.makeText(this, "Long Press the photo to rotate", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Press and hold picture to rotate", Toast.LENGTH_LONG).show();
         }
     }
 

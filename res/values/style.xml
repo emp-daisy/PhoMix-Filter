@@ -9,6 +9,7 @@
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="android:itemBackground">@color/back_col</item>
         <item name="android:listSelector">#00ff00</item>
+        <item name="android:itemTextAppearance">@style/listView</item>
         <item name="android:dropDownListViewStyle">@style/listView</item>
         <item name="android:listPopupWindowStyle">@style/listView</item>
         <item name="android:listViewStyle">@style/listView</item>
@@ -30,7 +31,7 @@
 
     <style name="listView" parent="@android:style/Widget.ListView">
         <item name="android:background">#ff0000</item>
-        <item name="android:listSelector">#00ff00</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:itemPadding">0dp</item>
     </style>
 </resources>

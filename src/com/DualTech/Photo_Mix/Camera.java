@@ -31,7 +31,7 @@ public class Camera extends Activity implements View.OnClickListener{
     static Bitmap bmp,img_bitmap;
     ImageView iv;
     final static int cameraData = 0;
-    final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Photo Mix/");
+    final static File DIR = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/PhoMix Filter/");
     File file;
     FileOutputStream ostream;
 
