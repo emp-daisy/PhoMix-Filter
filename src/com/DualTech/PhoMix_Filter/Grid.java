@@ -313,7 +313,8 @@ public class Grid extends Activity implements View.OnClickListener, Select_Color
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         Bitmap rotatedIMG =  Bitmap.createBitmap(foto, 0, 0, foto.getWidth(), foto.getHeight(), matrix, true);
-        img.setImageBitmap(rotatedIMG);
+        Bitmap finalImg = Bitmap.createScaledBitmap(rotatedIMG, img.getWidth(), img.getHeight(), true);
+        img.setImageBitmap(finalImg);
         img.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         }

@@ -1,4 +1,6 @@
 package com.DualTech.PhoMix_Filter;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.effect.Effect;
 import android.media.effect.EffectContext;
@@ -6,6 +8,7 @@ import android.media.effect.EffectFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.os.Bundle;
 
 import java.nio.IntBuffer;
 
@@ -202,4 +205,6 @@ public class SurfaceViewRenderer implements GLSurfaceView.Renderer {
             loadTextures();
         }
     }
+
+
 }

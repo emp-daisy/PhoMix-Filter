@@ -1,9 +1,5 @@
 package com.DualTech.PhoMix_Filter;
 
-/**
- * Created by Jesz on 09-Jun-15.
- */
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
