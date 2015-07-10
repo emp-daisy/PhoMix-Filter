@@ -13,7 +13,6 @@
         android:icon="@drawable/ic_launcher">
         <activity
             android:name=".SplashMain"
-            android:theme="@style/action"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
